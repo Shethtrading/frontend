@@ -1,0 +1,46 @@
+"use client"
+
+import { Card, CardContent } from "@/components/ui/card"
+import { useRouter } from 'next/navigation'
+
+const products = [
+  { name: "XLPE/PVC", image: "/placeholder.svg?height=200&width=200", slug: "xlpe-pvc" },
+  { name: "EPR", image: "/placeholder.svg?height=200&width=200", slug: "epr" },
+  { name: "Ariel Bunched Cable", image: "/placeholder.svg?height=200&width=200", slug: "ariel-bunched-cable" },
+]
+
+export default function Component() {
+  const router = useRouter()
+
+  const handleCardClick = (slug: string) => {
+    router.push(`/3m/heat-shrink-cable-jointing-kit/${slug}`)
+  }
+
+  return (
+    <div className="flex justify-center min-h-screen bg-background p-4">
+      <div className="w-full max-w-6xl">
+        <h1 className="text-3xl font-bold text-center mb-8">Heat Shrink Cable Jointing kit Products</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {products.map((product, index) => (
+            <Card 
+              key={index} 
+              className="flex flex-col md:flex-row overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
+              onClick={() => handleCardClick(product.slug)}
+            >
+              <div className="w-full md:w-1/2 h-48 md:h-auto">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <CardContent className="flex-1 flex items-center justify-center p-4">
+                <h2 className="text-xl font-semibold text-center md:text-left">{product.name}</h2>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
