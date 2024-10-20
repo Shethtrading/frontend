@@ -2,13 +2,16 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { ArrowLeft } from 'lucide-react'
 
 export default function Component() {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     cableType: '',
     termination: '',
@@ -91,8 +94,20 @@ export default function Component() {
     console.log('Added to cart:', formData)
   }
 
+  const handleBack = () => {
+    router.back()
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
+      <Button 
+        variant="ghost" 
+        className="mb-4"
+        onClick={handleBack}
+      >
+        <ArrowLeft className="mr-2 h-4 w-4" />
+        Back
+      </Button>
       <Card className="overflow-hidden">
         <CardContent className="p-0">
           <div className="flex flex-col lg:flex-row">
@@ -132,7 +147,7 @@ export default function Component() {
             {/* Right side - Product details and form */}
             <div className="w-full lg:w-1/2 p-6 space-y-6">
               <div>
-                <h1 className="text-3xl font-bold mb-2">Heat Shrink Cable Jointing kit</h1>
+                <h1 className="text-3xl font-bold mb-2">Cable Product</h1>
                 <p className="text-gray-600">High-quality cable for various applications</p>
               </div>
               
