@@ -1,14 +1,16 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 export default function Component() {
   const [formData, setFormData] = useState({
+    cableType: '',
     termination: '',
     voltage: '',
     core: '',
@@ -18,6 +20,8 @@ export default function Component() {
   })
 
   const [selectedImage, setSelectedImage] = useState(0)
+  const [availableVoltages, setAvailableVoltages] = useState<string[]>([])
+  const [availableCores, setAvailableCores] = useState<string[]>([])
 
   const productImages = [
     "/placeholder.svg?height=600&width=600",
@@ -26,9 +30,45 @@ export default function Component() {
     "/placeholder.svg?height=600&width=600&text=Image+4",
   ]
 
-  const voltageOptions = ['1.1KV(E)', '3.3KV', '6.6KV', '11KV', '22KV', '33KV']
-  const coreOptions = ['1 core', '2 core', '3 core', '4 core']
+  const allVoltageOptions = ['1.1KV(E)', '3.3KV', '6.6KV', '11KV', '22KV', '33KV', '6.6KV(UE)/11KV(E)', '11KV(UE)/22KV(E)', '22KV(E)', '33KV(E)', '33KV(UE)']
+  const allCoreOptions = ['1 core', '2 core', '3 core', '4 core']
   const sizeOptions = ['25 sqmm', '35 sqmm', '50 sqmm', '70 sqmm', '95 sqmm', '120 sqmm', '150 sqmm', '185 sqmm', '240 sqmm', '300 sqmm']
+  const cableTypeOptions = ['XLPE/PVC', 'EPR', 'Ariel Bunched Cable', 'ABC']
+
+  useEffect(() => {
+    updateAvailableOptions()
+  }, [formData.cableType, formData.voltage])
+
+  const updateAvailableOptions = () => {
+    let voltages: string[] = []
+    let cores: string[] = []
+
+    if (formData.cableType === 'XLPE/PVC') {
+      voltages = allVoltageOptions.filter(v => v === '1.1KV(E)' || !v.includes('UE'))
+      if (formData.voltage === '1.1KV(E)') {
+        cores = allCoreOptions
+      } else {
+        cores = ['1 core', '3 core']
+      }
+    } else if (formData.cableType === 'ABC') {
+      voltages = ['6.6KV(UE)/11KV(E)', '11KV(UE)/22KV(E)', '22KV(E)', '33KV(E)', '33KV(UE)']
+      cores = ['1 core']
+    } else {
+      voltages = allVoltageOptions
+      cores = allCoreOptions
+    }
+
+    setAvailableVoltages(voltages)
+    setAvailableCores(cores)
+
+    // Reset voltage and core if they're not in the new available options
+    if (!voltages.includes(formData.voltage)) {
+      setFormData(prev => ({ ...prev, voltage: '' }))
+    }
+    if (!cores.includes(formData.core)) {
+      setFormData(prev => ({ ...prev, core: '' }))
+    }
+  }
 
   const handleInputChange = (field: string, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -79,11 +119,25 @@ export default function Component() {
             {/* Right side - Product details and form */}
             <div className="w-full lg:w-1/2 p-6 space-y-6">
               <div>
-                <h1 className="text-3xl font-bold mb-2">Ariel Bunched Cable</h1>
-                <p className="text-gray-600">High-quality cable jointing kit for various applications</p>
+                <h1 className="text-3xl font-bold mb-2">Cable Product</h1>
+                <p className="text-gray-600">High-quality cable for various applications</p>
               </div>
               
               <div className="space-y-4">
+                <div>
+                  <Label htmlFor="cableType">Cable Type</Label>
+                  <Select onValueChange={(value) => handleInputChange('cableType', value)}>
+                    <SelectTrigger id="cableType">
+                      <SelectValue placeholder="Select cable type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {cableTypeOptions.map((option) => (
+                        <SelectItem key={option} value={option}>{option}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 <div>
                   <Label htmlFor="termination">Termination</Label>
                   <Select onValueChange={(value) => handleInputChange('termination', value)}>
@@ -99,12 +153,15 @@ export default function Component() {
                 
                 <div>
                   <Label htmlFor="voltage">Voltage</Label>
-                  <Select onValueChange={(value) => handleInputChange('voltage', value)}>
+                  <Select 
+                    onValueChange={(value) => handleInputChange('voltage', value)}
+                    disabled={!formData.cableType}
+                  >
                     <SelectTrigger id="voltage">
                       <SelectValue placeholder="Select voltage" />
                     </SelectTrigger>
                     <SelectContent>
-                      {voltageOptions.map((option) => (
+                      {availableVoltages.map((option) => (
                         <SelectItem key={option} value={option}>{option}</SelectItem>
                       ))}
                     </SelectContent>
@@ -113,12 +170,15 @@ export default function Component() {
                 
                 <div>
                   <Label htmlFor="core">Core</Label>
-                  <Select onValueChange={(value) => handleInputChange('core', value)}>
+                  <Select 
+                    onValueChange={(value) => handleInputChange('core', value)}
+                    disabled={!formData.cableType || !formData.voltage}
+                  >
                     <SelectTrigger id="core">
                       <SelectValue placeholder="Select core" />
                     </SelectTrigger>
                     <SelectContent>
-                      {coreOptions.map((option) => (
+                      {availableCores.map((option) => (
                         <SelectItem key={option} value={option}>{option}</SelectItem>
                       ))}
                     </SelectContent>
@@ -154,19 +214,14 @@ export default function Component() {
                 
                 <div>
                   <Label htmlFor="quantity">Quantity</Label>
-                  <Select 
-                    onValueChange={(value) => handleInputChange('quantity', parseInt(value))}
-                    defaultValue="1"
-                  >
-                    <SelectTrigger id="quantity">
-                      <SelectValue placeholder="Select quantity" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                        <SelectItem key={num} value={num.toString()}>{num}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Input
+                    id="quantity"
+                    type="number"
+                    min="1"
+                    value={formData.quantity}
+                    onChange={(e) => handleInputChange('quantity', parseInt(e.target.value) || 1)}
+                    className="w-full"
+                  />
                 </div>
               </div>
               
