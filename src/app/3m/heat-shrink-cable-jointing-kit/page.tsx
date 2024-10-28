@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ArrowLeft } from 'lucide-react'
+import { CableType, ConductorType, CoreType, SizeType, TerminationType, VoltageType } from './skuTypes'
+import { generateSku } from './skuGenerator'
 
 export default function Component() {
   const router = useRouter()
@@ -34,9 +36,9 @@ export default function Component() {
     "/placeholder.svg?height=600&width=600&text=Image+4",
   ]
 
-  const allVoltageOptions = ['1.1KV(E)', '3.3KV', '6.6KV', '11KV', '22KV', '33KV', '6.6KV(UE)/11KV(E)', '11KV(UE)/22KV(E)', '22KV(E)', '33KV(E)', '33KV(UE)']
+  const allVoltageOptions = ['1.1KV(E)', '6.6KV(UE)/11KV(E)', '11KV(UE)/22KV(E)', '22KV(E)', '33KV(E)', '33KV(UE)', '66KV(E)']
   const allCoreOptions = ['1 core', '2 core', '3 core', '4 core']
-  const sizeOptions = ['25 sqmm', '35 sqmm', '50 sqmm', '70 sqmm', '95 sqmm', '120 sqmm', '150 sqmm', '185 sqmm', '240 sqmm', '300 sqmm']
+  const sizeOptions = ['6mm', '10mm', '16mm', '25mm', '35mm', '50mm', '70mm', '95mm', '120mm', '150mm', '185mm', '240mm', '300mm', '400mm', '500mm', '630mm', '800mm', '1000mm']
   const cableTypeOptions = ['XLPE/PVC', 'EPR', 'Aerial Bunched Cable (ABC)']
 
   useEffect(() => {
@@ -91,8 +93,28 @@ export default function Component() {
   }
 
   const handleAddToCart = () => {
-    console.log('Added to cart:', formData)
-  }
+    // Convert the form data to match the expected types
+    const terminationType = formData.termination.toLowerCase() === 'straight-through' 
+      ? 'Straight through' 
+      : formData.termination.charAt(0).toUpperCase() + formData.termination.slice(1) as TerminationType;
+    
+    const coreType = formData.core.toUpperCase() as CoreType;
+    const sizeType = formData.size.replace('sqmm', 'mm') as SizeType;
+    const conductorType = formData.material.toUpperCase() as ConductorType;
+    
+    const sku = generateSku(
+      'Heat Shrink',
+      terminationType,
+      formData.voltage as VoltageType,
+      coreType,
+      sizeType,
+      formData.cableType as CableType,
+      conductorType
+    );
+    
+    console.log('Generated SKU:', sku);
+    console.log('Form Data:', formData);
+  };
 
   const handleBack = () => {
     router.back()
@@ -238,8 +260,8 @@ export default function Component() {
                       <SelectValue placeholder="Select material" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="aluminum">Aluminum</SelectItem>
-                      <SelectItem value="copper">Copper</SelectItem>
+                      <SelectItem value="ALUMINIUM">Aluminium</SelectItem>
+                      <SelectItem value="COPPER">Copper</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
