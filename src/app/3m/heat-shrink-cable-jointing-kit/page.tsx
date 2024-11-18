@@ -171,15 +171,16 @@ export default function Component() {
 
     console.log("Generated SKU:", sku);
     console.log("Form Data:", formData);
+    const name = `${formData.cableType} ${formData.termination} ${formData.voltage} ${formData.core} ${formData.size} ${formData.material}`
 
-    updatingCart(sku, formData.quantity);
+    updatingCart(sku, formData.quantity, name);
   };
 
-  const updatingCart = async (sku: string, quantity: any) => {
+  const updatingCart = async (sku: string, quantity: any, name: string) => {
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/order`,
-        { sku: sku, quantity: quantity }
+        { sku: sku, quantity: quantity, name: name }
       );
 
       if (res?.data?.id) {

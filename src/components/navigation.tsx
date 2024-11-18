@@ -106,8 +106,9 @@ export default function Navigation() {
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/create`,
-        { userId: email, orderIds }
+        { email: email, orderIds }
       );
+      localStorage.removeItem("3mItems");
       toast({ description: "Quote request sent successfully!" });
       console.log("Response:", res.data);
     } catch (error) {
@@ -121,10 +122,32 @@ export default function Navigation() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = () => {
-    setSavedFormData(formData);
-    localStorage.setItem("contactInfo", JSON.stringify(formData));
-    setIsFormOpen(false);
+  const handleSave = async () => {
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/user`,
+        {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.number,
+        }
+      );
+
+      const updatedFormData = {
+        ...formData,
+        userid: res.data.userid, // Assuming userid is in res.data
+      };
+
+      setFormData(updatedFormData); // Update state
+      setSavedFormData(updatedFormData); // Save the updated data
+      localStorage.setItem("contactInfo", JSON.stringify(updatedFormData)); // Store in localStorage
+
+      toast({ description: "User created successfully" });
+      setIsFormOpen(false); // Close the form
+    } catch (error) {
+      console.error(error);
+      toast({ description: "Failed to save user data" });
+    }
   };
 
   const handleCancel = () => {
@@ -165,7 +188,7 @@ export default function Navigation() {
         (itemId: string) => itemId !== id
       );
       localStorage.setItem("3mItems", JSON.stringify(updatedItems));
-
+      setCartItems([]);
       toast({ description: "Item removed from cart successfully." });
     } catch (error) {
       console.error("Error deleting item:", error);
@@ -193,7 +216,7 @@ export default function Navigation() {
             <span className="sr-only">Open cart</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="right" className="w-[600px]">
+        <SheetContent side="right" className="min-w-[540px]">
           <div className="flex flex-col h-full">
             <div className="flex-grow overflow-auto">
               <h2 className="py-[1rem] font-semibold text-[1.2rem]">Cart</h2>
