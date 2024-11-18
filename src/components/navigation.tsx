@@ -1,88 +1,181 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { ArrowLeft, ShoppingCart, ChevronDown, ChevronUp, Plus, Minus } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { useEffect, useState } from "react";
+import {
+  ArrowLeft,
+  ShoppingCart,
+  ChevronDown,
+  ChevronUp,
+  Plus,
+  Minus,
+  Trash2,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import axios from "axios";
+import { toast } from "@/hooks/use-toast";
 
 interface CartItem {
-  id: string
-  quantity: number
+  id: string;
+  quantity: number;
+  name?: string;
+  sku?: string;
 }
 
 export default function Navigation() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
-  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    number: ''
-  })
+    name: "",
+    email: "",
+    number: "",
+  });
   const [savedFormData, setSavedFormData] = useState({
-    name: '',
-    email: '',
-    number: ''
-  })
+    name: "",
+    email: "",
+    number: "",
+  });
 
   useEffect(() => {
-    const key = "3mItems"
-    const storedItems = localStorage.getItem(key)
-    const itemsArray = storedItems ? JSON.parse(storedItems) : []
-    setCartItems(itemsArray.map((id: string) => ({ id, quantity: 1 })))
+    const fetchCartDetails = async (ids: string[]) => {
+      try {
+        const fetchedItems = await Promise.all(
+          ids.map(async (id) => {
+            const response = await axios.get(
+              `http://localhost:8282/api/v1/getCart/${id}`
+            );
+            const item = response.data.item[0];
+            return {
+              id: item.order_id,
+              quantity: item.quantity,
+              name: item.name,
+              sku: item.sku,
+            };
+          })
+        );
+        setCartItems(fetchedItems);
+      } catch (error) {
+        console.error("Error fetching cart details:", error);
+        toast({
+          description: "Failed to fetch cart details. Please try again.",
+        });
+      }
+    };
 
-    const storedFormData = localStorage.getItem('contactInfo')
+    const key = "3mItems";
+    const storedItems = localStorage.getItem(key);
+    const itemsArray = storedItems ? JSON.parse(storedItems) : [];
+    fetchCartDetails(itemsArray);
+
+    const storedFormData = localStorage.getItem("contactInfo");
     if (storedFormData) {
-      const parsedFormData = JSON.parse(storedFormData)
-      setSavedFormData(parsedFormData)
-      setFormData(parsedFormData)
+      const parsedFormData = JSON.parse(storedFormData);
+      setSavedFormData(parsedFormData);
+      setFormData(parsedFormData);
     } else {
-      setIsFormOpen(true)
+      setIsFormOpen(true);
     }
-  }, [])
+  }, []);
 
   const handleBack = () => {
-    console.log('Back button clicked')
-  }
+    console.log("Back button clicked");
+  };
 
-  const handleGetQuote = () => {
-    console.log('Get a Quote clicked', savedFormData)
-  }
+  const handleGetQuote = async () => {
+    const { email } = formData;
+    const orderIds = JSON.parse(localStorage.getItem("3mItems") || "[]");
+
+    // Validation
+    if (!email) {
+      toast({ description: "User ID is required to proceed." });
+      return;
+    }
+
+    if (!orderIds || orderIds.length === 0) {
+      toast({
+        description:
+          "Please add at least one item to your cart before getting a quote.",
+      });
+      return;
+    }
+
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/create`,
+        { userId: email, orderIds }
+      );
+      toast({ description: "Quote request sent successfully!" });
+      console.log("Response:", res.data);
+    } catch (error) {
+      console.error("Error occurred:", error);
+      toast({ description: "Failed to get a quote. Please try again." });
+    }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSave = () => {
-    setSavedFormData(formData)
-    localStorage.setItem('contactInfo', JSON.stringify(formData))
-    setIsFormOpen(false)
-  }
+    setSavedFormData(formData);
+    localStorage.setItem("contactInfo", JSON.stringify(formData));
+    setIsFormOpen(false);
+  };
 
   const handleCancel = () => {
-    setFormData(savedFormData)
-    setIsFormOpen(false)
-  }
+    setFormData(savedFormData);
+    setIsFormOpen(false);
+  };
 
-  const updateQuantity = (id: string, newQuantity: number) => {
-    setCartItems(prevItems =>
-      prevItems.map(item =>
-        item.id === id ? { ...item, quantity: Math.max(0, newQuantity) } : item
-      )
-    )
-  }
+  const updateQuantity = async (id: string, newQuantity: number) => {
+    if (newQuantity < 0) return;
+
+    try {
+      await axios.put("http://localhost:8282/api/v1/cartUpdate", {
+        quantity: newQuantity.toString(),
+        orderId: id,
+      });
+
+      setCartItems((prevItems) =>
+        prevItems.map((item) =>
+          item.id === id ? { ...item, quantity: newQuantity } : item
+        )
+      );
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+      toast({ description: "Failed to update quantity. Please try again." });
+    }
+  };
+
+  const deleteItem = async (id: string) => {
+    try {
+      await axios.delete("http://localhost:8282/api/v1/itemDelete", {
+        data: { orderId: id },
+      });
+
+      setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+
+      const storedItems = JSON.parse(localStorage.getItem("3mItems") || "[]");
+      const updatedItems = storedItems.filter(
+        (itemId: string) => itemId !== id
+      );
+      localStorage.setItem("3mItems", JSON.stringify(updatedItems));
+
+      toast({ description: "Item removed from cart successfully." });
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      toast({ description: "Failed to remove item. Please try again." });
+    }
+  };
 
   return (
     <div className="flex justify-between items-center pr-2">
-      <Button 
-        variant="ghost" 
-        className="mb-4"
-        onClick={handleBack}
-      >
+      <Button variant="ghost" className="mb-4" onClick={handleBack}>
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back
       </Button>
@@ -91,8 +184,8 @@ export default function Navigation() {
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="relative">
             <ShoppingCart className="h-4 w-4" />
-            <Badge 
-              variant="destructive" 
+            <Badge
+              variant="destructive"
               className="absolute -top-2 -right-3 px-[0.35rem] py-[0.1rem] text-[0.8rem]"
             >
               {cartItems.length}
@@ -100,10 +193,10 @@ export default function Navigation() {
             <span className="sr-only">Open cart</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="right" className="w-[400px] sm:w-[540px]">
+        <SheetContent side="right" className="w-[600px]">
           <div className="flex flex-col h-full">
             <div className="flex-grow overflow-auto">
-              <h2 className='py-[1rem] font-semibold text-[1.2rem]'>Cart</h2>
+              <h2 className="py-[1rem] font-semibold text-[1.2rem]">Cart</h2>
               <div className="mb-4 bg-muted rounded-md">
                 <Button
                   variant="ghost"
@@ -120,7 +213,11 @@ export default function Navigation() {
                   ) : (
                     "Contact Information"
                   )}
-                  {isFormOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                  {isFormOpen ? (
+                    <ChevronUp className="h-4 w-4" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4" />
+                  )}
                 </Button>
                 {isFormOpen && (
                   <div className="space-y-4 mt-4 px-2">
@@ -157,7 +254,9 @@ export default function Navigation() {
                       />
                     </div>
                     <div className="flex justify-end space-x-2 pb-[0.5rem]">
-                      <Button variant="outline" onClick={handleCancel}>Cancel</Button>
+                      <Button variant="outline" onClick={handleCancel}>
+                        Cancel
+                      </Button>
                       <Button onClick={handleSave}>Save</Button>
                     </div>
                   </div>
@@ -166,35 +265,51 @@ export default function Navigation() {
               {cartItems.length > 0 ? (
                 <ul className="space-y-2">
                   {cartItems.map((item, index) => (
-                    <li key={index} className="p-2 rounded-md flex justify-between items-center">
-                      <p>{item.id}</p>
+                    <li
+                      key={index}
+                      className="p-2 rounded-md flex justify-between items-center"
+                    >
+                      <div className="w-[50%]">
+                        <p className="text-sm">{item.name || "Unnamed Item"}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {item.sku}
+                        </p>
+                      </div>
                       <div className="flex items-center space-x-2">
                         <Button
                           variant="outline"
                           size="icon"
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          onClick={() =>
+                            updateQuantity(item.id, item.quantity - 1)
+                          }
                         >
                           <Minus className="h-4 w-4" />
                         </Button>
-                        <Input
-                          type="number"
-                          value={item.quantity}
-                          onChange={(e) => updateQuantity(item.id, parseInt(e.target.value) || 0)}
-                          className="w-16 text-center"
-                        />
+                        <div className=" text-center">{item.quantity}</div>
                         <Button
                           variant="outline"
                           size="icon"
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          onClick={() =>
+                            updateQuantity(item.id, item.quantity + 1)
+                          }
                         >
                           <Plus className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="icon"
+                          onClick={() => deleteItem(item.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-muted-foreground text-center">No items in cart</p>
+                <p className="text-muted-foreground text-center">
+                  No items in cart
+                </p>
               )}
             </div>
             {cartItems.length > 0 && (
@@ -206,5 +321,5 @@ export default function Navigation() {
         </SheetContent>
       </Sheet>
     </div>
-  )
+  );
 }

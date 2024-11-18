@@ -200,7 +200,7 @@ export default function Component() {
   return (
     <div className="container mx-auto px-4 py-4">
       {loading && <LoadingSpinner />}
-      <Navigation />
+      {!loading && <Navigation /> }
       <Card className="overflow-hidden">
         <CardContent className="p-0">
           <div className="flex flex-col lg:flex-row">
