@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -15,14 +14,12 @@ import {
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft } from "lucide-react";
 import { updateLocalStorageArray } from "@/utils/localstorage";
 import { toast } from "@/hooks/use-toast";
 import LoadingSpinner from "@/components/loader";
 import Navigation from "@/components/navigation";
 
 export default function Component() {
-  const router = useRouter();
   const [formData, setFormData] = useState({
     pack: "",
     quantity: 1,

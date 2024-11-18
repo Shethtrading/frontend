@@ -2,21 +2,25 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ArrowLeft } from 'lucide-react'
+import LoadingSpinner from '@/components/loader'
+import Navigation from '@/components/navigation'
+import { updateLocalStorageArray } from '@/utils/localstorage'
+import axios from 'axios'
+import { toast } from '@/hooks/use-toast'
 
 export default function Component() {
-  const router = useRouter()
   const [formData, setFormData] = useState({
     size: '',
     quantity: 1
   })
 
+  const [loading, setLoading] = useState(false)
   const [selectedImage, setSelectedImage] = useState(0)
 
   const productImages = [
@@ -26,30 +30,49 @@ export default function Component() {
     "/placeholder.svg?height=600&width=600&text=Image+4",
   ]
 
-  const sizeOptions = ['2mm', '4mm', '8mm', '10mm']
+  const sizeOptions = ['AEROSOL 1602-R 12 OZ']
 
   const handleInputChange = (field: string, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const handleAddToCart = () => {
-    console.log('Added to cart:', formData)
-  }
+  const handleAddToCart = async () => {
+    if (!formData.size) {
+      toast({ description: "Please select a size type." });
+      return;
+    }
 
-  const handleBack = () => {
-    router.back()
-  }
+    setLoading(true);
+
+    try {
+
+      const sku = "3M_AS_1602-R";
+      const quantity = formData.quantity;
+      const name = `Red Insulation Sealer AEROSOL 1602-R`;
+
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/order`,
+        { sku, quantity, name }
+      );
+
+      if (res?.data?.id) {
+        const key = "3mItems";
+        updateLocalStorageArray(key, res.data.id);
+      }
+
+      toast({ description: "Added to Cart Successfully" });
+    } catch (error) {
+      console.error(error);
+      toast({ description: "Failed to add to cart, please try again." });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <Button 
-        variant="ghost" 
-        className="mb-4"
-        onClick={handleBack}
-      >
-        <ArrowLeft className="mr-2 h-4 w-4" />
-        Back
-      </Button>
+    <div className="container mx-auto px-4 py-4">
+      {loading && <LoadingSpinner />}
+      {!loading && <Navigation />}
       <Card className="overflow-hidden">
         <CardContent className="p-0">
           <div className="flex flex-col lg:flex-row">
