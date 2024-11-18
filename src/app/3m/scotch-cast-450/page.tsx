@@ -3,21 +3,25 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import axios from 'axios'
 import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ArrowLeft } from 'lucide-react'
+import { updateLocalStorageArray } from '@/utils/localstorage'
+import { toast } from '@/hooks/use-toast'
 
 export default function Component() {
   const router = useRouter()
   const [formData, setFormData] = useState({
-    weight: '',
+    pack: '',
     quantity: 1
   })
 
   const [selectedImage, setSelectedImage] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const productImages = [
     "/placeholder.svg?height=600&width=600",
@@ -26,14 +30,47 @@ export default function Component() {
     "/placeholder.svg?height=600&width=600&text=Image+4",
   ]
 
-  const weightOptions = ['5 kg', '6 kg', '7 kg', '8 kg']
+  const packOptions = ['N Pack', 'P Pack', 'Q Pack']
 
   const handleInputChange = (field: string, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const handleAddToCart = () => {
-    console.log('Added to cart:', formData)
+  const handleAddToCart = async () => {
+    if (!formData.pack) {
+      toast({ description: "Please select a pack type." })
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      const skuMap = {
+        'N Pack': '3M_SC40_N',
+        'P Pack': '3M_SC40_P',
+        'Q Pack': '3M_SC40_Q'
+      }
+      const sku = skuMap[formData.pack]
+      const quantity = formData.quantity
+      const name = "Scotch cast 450"
+
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/order`,
+        { sku, quantity, name }
+      )
+
+      if (res?.data?.id) {
+        const key = "3mItems"
+        updateLocalStorageArray(key, res.data.id)
+      }
+
+      toast({ description: "Added to Cart Successfully" })
+    } catch (error) {
+      console.error(error)
+      toast({ description: "Failed to add to cart, please try again." })
+    } finally {
+      setLoading(false)
+    }
   }
 
   const handleBack = () => {
@@ -96,13 +133,13 @@ export default function Component() {
                 
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="weight">Weight</Label>
-                    <Select onValueChange={(value) => handleInputChange('weight', value)}>
-                      <SelectTrigger id="weight">
-                        <SelectValue placeholder="Select weight" />
+                    <Label htmlFor="pack">Pack</Label>
+                    <Select onValueChange={(value) => handleInputChange('pack', value)}>
+                      <SelectTrigger id="pack">
+                        <SelectValue placeholder="Select pack" />
                       </SelectTrigger>
                       <SelectContent>
-                        {weightOptions.map((option) => (
+                        {packOptions.map((option) => (
                           <SelectItem key={option} value={option}>{option}</SelectItem>
                         ))}
                       </SelectContent>
@@ -123,7 +160,9 @@ export default function Component() {
                 </div>
               </div>
               
-              <Button className="w-full mt-6" onClick={handleAddToCart}>Add to Cart</Button>
+              <Button className="w-full mt-6" onClick={handleAddToCart} disabled={loading}>
+                {loading ? "Adding..." : "Add to Cart"}
+              </Button>
             </div>
           </div>
         </CardContent>
