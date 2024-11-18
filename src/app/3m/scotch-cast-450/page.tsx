@@ -1,92 +1,91 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import axios from 'axios'
-import { Card, CardContent } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ArrowLeft } from 'lucide-react'
-import { updateLocalStorageArray } from '@/utils/localstorage'
-import { toast } from '@/hooks/use-toast'
+import { useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ArrowLeft } from "lucide-react";
+import { updateLocalStorageArray } from "@/utils/localstorage";
+import { toast } from "@/hooks/use-toast";
+import LoadingSpinner from "@/components/loader";
+import Navigation from "@/components/navigation";
 
 export default function Component() {
-  const router = useRouter()
+  const router = useRouter();
   const [formData, setFormData] = useState({
-    pack: '',
-    quantity: 1
-  })
+    pack: "",
+    quantity: 1,
+  });
 
-  const [selectedImage, setSelectedImage] = useState(0)
-  const [loading, setLoading] = useState(false)
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const productImages = [
     "/placeholder.svg?height=600&width=600",
     "/placeholder.svg?height=600&width=600&text=Image+2",
     "/placeholder.svg?height=600&width=600&text=Image+3",
     "/placeholder.svg?height=600&width=600&text=Image+4",
-  ]
+  ];
 
-  const packOptions = ['N Pack', 'P Pack', 'Q Pack']
+  const packOptions = ["N Pack", "P Pack", "Q Pack"];
 
   const handleInputChange = (field: string, value: string | number) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleAddToCart = async () => {
     if (!formData.pack) {
-      toast({ description: "Please select a pack type." })
-      return
+      toast({ description: "Please select a pack type." });
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
     try {
-      const skuMap = {
-        'N Pack': '3M_SC40_N',
-        'P Pack': '3M_SC40_P',
-        'Q Pack': '3M_SC40_Q'
-      }
-      const sku = skuMap[formData.pack]
-      const quantity = formData.quantity
-      const name = "Scotch cast 450"
+      const skuMap: Record<"N Pack" | "P Pack" | "Q Pack", string> = {
+        "N Pack": "3M_SC40_N",
+        "P Pack": "3M_SC40_P",
+        "Q Pack": "3M_SC40_Q",
+      };
+
+      const sku = skuMap[formData.pack as "N Pack" | "P Pack" | "Q Pack"];
+      const quantity = formData.quantity;
+      const name = `Scotch cast 450 ${formData.pack}`;
 
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/order`,
         { sku, quantity, name }
-      )
+      );
 
       if (res?.data?.id) {
-        const key = "3mItems"
-        updateLocalStorageArray(key, res.data.id)
+        const key = "3mItems";
+        updateLocalStorageArray(key, res.data.id);
       }
 
-      toast({ description: "Added to Cart Successfully" })
+      toast({ description: "Added to Cart Successfully" });
     } catch (error) {
-      console.error(error)
-      toast({ description: "Failed to add to cart, please try again." })
+      console.error(error);
+      toast({ description: "Failed to add to cart, please try again." });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
-
-  const handleBack = () => {
-    router.back()
-  }
+  };
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <Button 
-        variant="ghost" 
-        className="mb-4"
-        onClick={handleBack}
-      >
-        <ArrowLeft className="mr-2 h-4 w-4" />
-        Back
-      </Button>
+    <div className="container mx-auto px-4 py-4">
+      {loading && <LoadingSpinner />}
+      {!loading && <Navigation />}
       <Card className="overflow-hidden">
         <CardContent className="p-0">
           <div className="flex flex-col lg:flex-row">
@@ -109,7 +108,7 @@ export default function Component() {
                     key={index}
                     onClick={() => setSelectedImage(index)}
                     className={`flex-shrink-0 w-20 h-20 relative rounded-md overflow-hidden ${
-                      selectedImage === index ? 'ring-2 ring-primary' : ''
+                      selectedImage === index ? "ring-2 ring-primary" : ""
                     }`}
                   >
                     <Image
@@ -122,30 +121,38 @@ export default function Component() {
                 ))}
               </div>
             </div>
-            
+
             {/* Right side - Product details and form */}
             <div className="w-full lg:w-1/2 p-6 flex flex-col justify-between">
               <div className="space-y-6">
                 <div>
                   <h1 className="text-3xl font-bold mb-2">Scotch cast 450</h1>
-                  <p className="text-gray-600">High-quality cable for various applications</p>
+                  <p className="text-gray-600">
+                    High-quality cable for various applications
+                  </p>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div>
                     <Label htmlFor="pack">Pack</Label>
-                    <Select onValueChange={(value) => handleInputChange('pack', value)}>
+                    <Select
+                      onValueChange={(value) =>
+                        handleInputChange("pack", value)
+                      }
+                    >
                       <SelectTrigger id="pack">
                         <SelectValue placeholder="Select pack" />
                       </SelectTrigger>
                       <SelectContent>
                         {packOptions.map((option) => (
-                          <SelectItem key={option} value={option}>{option}</SelectItem>
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="quantity">Quantity</Label>
                     <Input
@@ -153,14 +160,23 @@ export default function Component() {
                       type="number"
                       min="1"
                       value={formData.quantity}
-                      onChange={(e) => handleInputChange('quantity', parseInt(e.target.value) || 1)}
+                      onChange={(e) =>
+                        handleInputChange(
+                          "quantity",
+                          parseInt(e.target.value) || 1
+                        )
+                      }
                       className="w-full"
                     />
                   </div>
                 </div>
               </div>
-              
-              <Button className="w-full mt-6" onClick={handleAddToCart} disabled={loading}>
+
+              <Button
+                className="w-full mt-6"
+                onClick={handleAddToCart}
+                disabled={loading}
+              >
                 {loading ? "Adding..." : "Add to Cart"}
               </Button>
             </div>
@@ -168,5 +184,5 @@ export default function Component() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
