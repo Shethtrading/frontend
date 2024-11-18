@@ -29,7 +29,7 @@ import LoadingSpinner from "@/components/loader";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Component() {
-  const { toast } = useToast()
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     cableType: "",
     termination: "",
@@ -171,7 +171,7 @@ export default function Component() {
 
     console.log("Generated SKU:", sku);
     console.log("Form Data:", formData);
-    const name = `${formData.cableType} ${formData.termination} ${formData.voltage} ${formData.core} ${formData.size} ${formData.material}`
+    const name = `${formData.cableType} ${formData.termination} ${formData.voltage} ${formData.core} ${formData.size} ${formData.material}`;
 
     updatingCart(sku, formData.quantity, name);
   };
@@ -187,10 +187,10 @@ export default function Component() {
         const key = "3mItems";
         updateLocalStorageArray(key, res.data.id);
       }
-      
+
       toast({
         description: "Added to Cart Successfully",
-      })
+      });
     } catch (error) {
       console.log(error);
     } finally {
@@ -201,7 +201,7 @@ export default function Component() {
   return (
     <div className="container mx-auto px-4 py-4">
       {loading && <LoadingSpinner />}
-      {!loading && <Navigation /> }
+      {!loading && <Navigation />}
       <Card className="overflow-hidden">
         <CardContent className="p-0">
           <div className="flex flex-col lg:flex-row">
@@ -371,12 +371,13 @@ export default function Component() {
                     type="number"
                     min="1"
                     value={formData.quantity}
-                    onChange={(e) =>
-                      handleInputChange(
-                        "quantity",
-                        parseInt(e.target.value) || 1
-                      )
-                    }
+                    onChange={(e) => {
+                      // Allow empty or valid number input
+                      const newValue = e.target.value;
+                      if (newValue === "" || !isNaN(parseInt(newValue))) {
+                        handleInputChange("quantity", newValue);
+                      }
+                    }}
                     className="w-full"
                   />
                 </div>

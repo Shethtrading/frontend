@@ -1,40 +1,46 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import Image from 'next/image'
-import { Card, CardContent } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ArrowLeft } from 'lucide-react'
-import LoadingSpinner from '@/components/loader'
-import Navigation from '@/components/navigation'
-import { updateLocalStorageArray } from '@/utils/localstorage'
-import axios from 'axios'
-import { toast } from '@/hooks/use-toast'
+import { useState } from "react";
+import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ArrowLeft } from "lucide-react";
+import LoadingSpinner from "@/components/loader";
+import Navigation from "@/components/navigation";
+import { updateLocalStorageArray } from "@/utils/localstorage";
+import axios from "axios";
+import { toast } from "@/hooks/use-toast";
 
 export default function Component() {
   const [formData, setFormData] = useState({
-    size: '',
-    quantity: 1
-  })
+    size: "",
+    quantity: 1,
+  });
 
-  const [loading, setLoading] = useState(false)
-  const [selectedImage, setSelectedImage] = useState(0)
+  const [loading, setLoading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(0);
 
   const productImages = [
     "/placeholder.svg?height=600&width=600",
     "/placeholder.svg?height=600&width=600&text=Image+2",
     "/placeholder.svg?height=600&width=600&text=Image+3",
     "/placeholder.svg?height=600&width=600&text=Image+4",
-  ]
+  ];
 
-  const sizeOptions = ['AEROSOL 1602-R 12 OZ']
+  const sizeOptions = ["AEROSOL 1602-R 12 OZ"];
 
   const handleInputChange = (field: string, value: string | number) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleAddToCart = async () => {
     if (!formData.size) {
@@ -45,7 +51,6 @@ export default function Component() {
     setLoading(true);
 
     try {
-
       const sku = "3M_AS_1602-R";
       const quantity = formData.quantity;
       const name = `Red Insulation Sealer AEROSOL 1602-R`;
@@ -95,7 +100,7 @@ export default function Component() {
                     key={index}
                     onClick={() => setSelectedImage(index)}
                     className={`flex-shrink-0 w-20 h-20 relative rounded-md overflow-hidden ${
-                      selectedImage === index ? 'ring-2 ring-primary' : ''
+                      selectedImage === index ? "ring-2 ring-primary" : ""
                     }`}
                   >
                     <Image
@@ -108,30 +113,40 @@ export default function Component() {
                 ))}
               </div>
             </div>
-            
+
             {/* Right side - Product details and form */}
             <div className="w-full lg:w-1/2 p-6 flex flex-col justify-between">
               <div className="space-y-6">
                 <div>
-                  <h1 className="text-3xl font-bold mb-2">Red Insulation Sealer</h1>
-                  <p className="text-gray-600">High-quality cable for various applications</p>
+                  <h1 className="text-3xl font-bold mb-2">
+                    Red Insulation Sealer
+                  </h1>
+                  <p className="text-gray-600">
+                    High-quality cable for various applications
+                  </p>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div>
                     <Label htmlFor="size">Size</Label>
-                    <Select onValueChange={(value) => handleInputChange('size', value)}>
+                    <Select
+                      onValueChange={(value) =>
+                        handleInputChange("size", value)
+                      }
+                    >
                       <SelectTrigger id="size">
                         <SelectValue placeholder="Select size" />
                       </SelectTrigger>
                       <SelectContent>
                         {sizeOptions.map((option) => (
-                          <SelectItem key={option} value={option}>{option}</SelectItem>
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="quantity">Quantity</Label>
                     <Input
@@ -139,18 +154,26 @@ export default function Component() {
                       type="number"
                       min="1"
                       value={formData.quantity}
-                      onChange={(e) => handleInputChange('quantity', parseInt(e.target.value) || 1)}
+                      onChange={(e) => {
+                        // Allow empty or valid number input
+                        const newValue = e.target.value;
+                        if (newValue === "" || !isNaN(parseInt(newValue))) {
+                          handleInputChange("quantity", newValue);
+                        }
+                      }}
                       className="w-full"
                     />
                   </div>
                 </div>
               </div>
-              
-              <Button className="w-full mt-6" onClick={handleAddToCart}>Add to Cart</Button>
+
+              <Button className="w-full mt-6" onClick={handleAddToCart}>
+                Add to Cart
+              </Button>
             </div>
           </div>
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

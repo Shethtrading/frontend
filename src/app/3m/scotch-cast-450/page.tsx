@@ -157,12 +157,13 @@ export default function Component() {
                       type="number"
                       min="1"
                       value={formData.quantity}
-                      onChange={(e) =>
-                        handleInputChange(
-                          "quantity",
-                          parseInt(e.target.value) || 1
-                        )
-                      }
+                      onChange={(e) => {
+                        // Allow empty or valid number input
+                        const newValue = e.target.value;
+                        if (newValue === "" || !isNaN(parseInt(newValue))) {
+                          handleInputChange("quantity", newValue);
+                        }
+                      }}
                       className="w-full"
                     />
                   </div>
