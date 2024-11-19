@@ -203,7 +203,7 @@ export default function Cart() {
           <span className="sr-only">Open cart</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="min-w-[540px]">
+      <SheetContent side="right" className="min-w-[300px] sm:min-w-[540px]">
         <div className="flex flex-col h-full">
           <div className="flex-grow overflow-auto">
             <h2 className="py-[1rem] font-semibold text-[1.2rem]">Cart</h2>
