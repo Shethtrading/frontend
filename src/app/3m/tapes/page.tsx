@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useRouter } from 'next/navigation'
 import { ArrowLeft } from "lucide-react"
+import Cart from "@/components/cart"
 
 const products = [
     { name: "Vinyl Tape Super 33+", image: "/placeholder.svg?height=200&width=200", slug: "vinyl-tape-super-33" },
@@ -39,7 +40,7 @@ export default function Component() {
             Back
           </Button>
           <h1 className="text-3xl font-bold text-center flex-grow">Heat Shrink Sleeves</h1>
-          <div className="w-[100px]"></div> {/* Spacer to balance the layout */}
+          <div className="pr-[1rem]"><Cart /></div> 
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product, index) => (

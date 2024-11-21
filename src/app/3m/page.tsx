@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
+import Cart from "@/components/cart"
 
 const products = [
   { name: "Heat Shrink Cable Jointing kit", image: "/placeholder.svg?height=200&width=200", slug: "heat-shrink-cable-jointing-kit" },
@@ -37,7 +38,7 @@ export default function Component() {
             Back
           </Button>
           <h1 className="text-3xl font-bold text-center flex-grow">3M Products</h1>
-          <div className="w-[100px]"></div> {/* Spacer to balance the layout */}
+          <div className="pr-[1rem]"><Cart /></div> 
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product, index) => (

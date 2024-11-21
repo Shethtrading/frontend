@@ -2,22 +2,22 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { ArrowLeft } from 'lucide-react'
+import LoadingSpinner from '@/components/loader'
+import Navigation from '@/components/navigation'
 
 export default function Component() {
-  const router = useRouter()
   const [formData, setFormData] = useState({
     size: '',
     quantity: 1
   })
 
   const [selectedImage, setSelectedImage] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   const productImages = [
     "/placeholder.svg?height=600&width=600",
@@ -36,20 +36,10 @@ export default function Component() {
     console.log('Added to cart:', formData)
   }
 
-  const handleBack = () => {
-    router.back()
-  }
-
   return (
     <div className="container mx-auto px-4 py-8">
-      <Button 
-        variant="ghost" 
-        className="mb-4"
-        onClick={handleBack}
-      >
-        <ArrowLeft className="mr-2 h-4 w-4" />
-        Back
-      </Button>
+      {loading && <LoadingSpinner />}
+      {!loading && <Navigation />}
       <Card className="overflow-hidden">
         <CardContent className="p-0">
           <div className="flex flex-col lg:flex-row">
