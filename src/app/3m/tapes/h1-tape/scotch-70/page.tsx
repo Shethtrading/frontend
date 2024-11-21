@@ -21,7 +21,7 @@ import Navigation from "@/components/navigation";
 
 export default function Component() {
   const [formData, setFormData] = useState({
-    color: "",
+    size: "",
     quantity: 1,
   });
 
@@ -35,15 +35,15 @@ export default function Component() {
     "/placeholder.svg?height=600&width=600&text=Image+4",
   ];
 
-  const colorOption = ["N color"];
+  const sizeOption = ["N size"];
 
   const handleInputChange = (field: string, value: string | number) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleAddToCart = async () => {
-    if (!formData.color) {
-      toast({ description: "Please select a color type." });
+    if (!formData.size) {
+      toast({ description: "Please select a size type." });
       return;
     }
 
@@ -53,7 +53,7 @@ export default function Component() {
 
       const sku = "";
       const quantity = formData.quantity;
-      const name = `Scotch cast 450 ${formData.color}`;
+      const name = `Scotch cast 450 ${formData.size}`;
 
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/order`,
@@ -126,17 +126,17 @@ export default function Component() {
 
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="color">Color</Label>
+                    <Label htmlFor="size">Size</Label>
                     <Select
                       onValueChange={(value) =>
-                        handleInputChange("color", value)
+                        handleInputChange("size", value)
                       }
                     >
-                      <SelectTrigger id="color">
-                        <SelectValue placeholder="Select color" />
+                      <SelectTrigger id="size">
+                        <SelectValue placeholder="Select size" />
                       </SelectTrigger>
                       <SelectContent>
-                        {colorOption.map((option) => (
+                        {sizeOption.map((option) => (
                           <SelectItem key={option} value={option}>
                             {option}
                           </SelectItem>

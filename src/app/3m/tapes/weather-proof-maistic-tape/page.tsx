@@ -7,18 +7,15 @@ import { ArrowLeft } from "lucide-react"
 import Cart from "@/components/cart"
 
 const products = [
-    { name: "Scotch 23", image: "/placeholder.svg?height=200&width=200", slug: "scotch-23" },
-    { name: "Scotch 70", image: "/placeholder.svg?height=200&width=200", slug: "scotch-70" },
-    { name: "Scotch 69", image: "/placeholder.svg?height=200&width=200", slug: "scotch-69" },
-    { name: "Scotch 27", image: "/placeholder.svg?height=200&width=200", slug: "scotch-27" },
-    { name: "Scotch 130C", image: "/placeholder.svg?height=200&width=200", slug: "scotch-130c" }
+    { name: "Monoplast", image: "/placeholder.svg?height=200&width=200", slug: "monoplast" },
+    { name: "Scotch Fill", image: "/placeholder.svg?height=200&width=200", slug: "scotch-fill" },
 ]
 
 export default function Component() {
   const router = useRouter()
 
   const handleCardClick = (slug: string) => {
-    router.push(`/3m/tapes/h1-tape/${slug}`)
+    router.push(`/3m/tapes/weather-proof-maistic-tape/${slug}`)
   }
 
   const handleBack = () => {
@@ -37,7 +34,7 @@ export default function Component() {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back
           </Button>
-          <h1 className="text-3xl font-bold text-center flex-grow">H1 Tape</h1>
+          <h1 className="text-3xl font-bold text-center flex-grow">Heat Shrink Sleeves</h1>
           <div className="pr-[1rem]"><Cart /></div> 
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
