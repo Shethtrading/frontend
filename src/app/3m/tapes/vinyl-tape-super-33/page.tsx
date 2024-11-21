@@ -21,7 +21,7 @@ import Navigation from "@/components/navigation";
 
 export default function Component() {
   const [formData, setFormData] = useState({
-    pack: "",
+    size: "",
     quantity: 1,
   });
 
@@ -35,30 +35,25 @@ export default function Component() {
     "/placeholder.svg?height=600&width=600&text=Image+4",
   ];
 
-  const packOptions = ["N Pack", "P Pack", "Q Pack"];
+  const sizeOption = ["N size"];
 
   const handleInputChange = (field: string, value: string | number) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleAddToCart = async () => {
-    if (!formData.pack) {
-      toast({ description: "Please select a pack type." });
+    if (!formData.size) {
+      toast({ description: "Please select a size type." });
       return;
     }
 
     setLoading(true);
 
     try {
-      const skuMap: Record<"N Pack" | "P Pack" | "Q Pack", string> = {
-        "N Pack": "3M_SC40_N",
-        "P Pack": "3M_SC40_P",
-        "Q Pack": "3M_SC40_Q",
-      };
 
-      const sku = skuMap[formData.pack as "N Pack" | "P Pack" | "Q Pack"];
+      const sku = "";
       const quantity = formData.quantity;
-      const name = `Scotch cast 450 ${formData.pack}`;
+      const name = `Scotch cast 450 ${formData.size}`;
 
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/order`,
@@ -131,17 +126,17 @@ export default function Component() {
 
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="pack">Pack</Label>
+                    <Label htmlFor="size">Size</Label>
                     <Select
                       onValueChange={(value) =>
-                        handleInputChange("pack", value)
+                        handleInputChange("size", value)
                       }
                     >
-                      <SelectTrigger id="pack">
-                        <SelectValue placeholder="Select pack" />
+                      <SelectTrigger id="size">
+                        <SelectValue placeholder="Select size" />
                       </SelectTrigger>
                       <SelectContent>
-                        {packOptions.map((option) => (
+                        {sizeOption.map((option) => (
                           <SelectItem key={option} value={option}>
                             {option}
                           </SelectItem>

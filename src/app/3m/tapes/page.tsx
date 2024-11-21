@@ -9,6 +9,10 @@ const products = [
     { name: "Vinyl Tape Super 33+", image: "/placeholder.svg?height=200&width=200", slug: "vinyl-tape-super-33" },
     { name: "Vinyl Tape Scotch 45", image: "/placeholder.svg?height=200&width=200", slug: "vinyl-tape-scotch-45" },
     { name: "Duct Tape", image: "/placeholder.svg?height=200&width=200", slug: "duct-tape" },
+    { name: "H1 Tape", image: "/placeholder.svg?height=200&width=200", slug: "h1-tape" },
+    { name: "Copper Sheilding Tape", image: "/placeholder.svg?height=200&width=200", slug: "copper-sheilding-tape" },
+    { name: "Cable Jacket Repair Tape", image: "/placeholder.svg?height=200&width=200", slug: "cable-jacket-repair-tape" },
+    { name: "Weather Proof Maistic Tape", image: "/placeholder.svg?height=200&width=200", slug: "weather-proof-maistic-tape" },
 ]
 
 export default function Component() {
