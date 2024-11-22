@@ -7,19 +7,15 @@ import { ArrowLeft } from "lucide-react"
 import Cart from "@/components/cart"
 
 const products = [
-    { name: "Vinyl Tape", image: "/placeholder.svg?height=200&width=200", slug: "vinyl-tape" },
-    { name: "Duct Tape", image: "/placeholder.svg?height=200&width=200", slug: "duct-tape" },
-    { name: "H1 Tape", image: "/placeholder.svg?height=200&width=200", slug: "h1-tape" },
-    { name: "Copper Sheilding Tape", image: "/placeholder.svg?height=200&width=200", slug: "copper-sheilding-tape" },
-    { name: "Cable Jacket Repair Tape", image: "/placeholder.svg?height=200&width=200", slug: "cable-jacket-repair-tape" },
-    { name: "Weather Proof Maistic Tape", image: "/placeholder.svg?height=200&width=200", slug: "weather-proof-maistic-tape" },
+    { name: "Scotch 45", image: "/placeholder.svg?height=200&width=200", slug: "scotch-45" },
+    { name: "Super 33", image: "/placeholder.svg?height=200&width=200", slug: "super-33" },
 ]
 
 export default function Component() {
   const router = useRouter()
 
   const handleCardClick = (slug: string) => {
-    router.push(`/3m/tapes/${slug}`)
+    router.push(`/3m/tapes/vinyl-tape/${slug}`)
   }
 
   const handleBack = () => {
@@ -38,7 +34,7 @@ export default function Component() {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back
           </Button>
-          <h1 className="text-3xl font-bold text-center flex-grow">Tapes</h1>
+          <h1 className="text-3xl font-bold text-center flex-grow">Vinyl Tape</h1>
           <div className="pr-[1rem]"><Cart /></div> 
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
