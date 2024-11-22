@@ -7,7 +7,7 @@ import { ArrowLeft } from "lucide-react"
 import Cart from "@/components/cart"
 
 const products = [
-    { name: "Scotch 45", image: "/placeholder.svg?height=200&width=200", slug: "scotch-45" },
+    { name: "Scotch 35", image: "/placeholder.svg?height=200&width=200", slug: "scotch-35" },
     { name: "Super 33", image: "/placeholder.svg?height=200&width=200", slug: "super-33" },
 ]
 
