@@ -35,7 +35,7 @@ export default function Component() {
     "/placeholder.svg?height=600&width=600&text=Image+4",
   ];
 
-  const sizeOption = ["N size"];
+  const sizeOption = ["19mm", "25mm", "38mm", "50mm"];
 
   const handleInputChange = (field: string, value: string | number) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -50,10 +50,17 @@ export default function Component() {
     setLoading(true);
 
     try {
+      const skuMap: Record<"19mm" | "25mm" | "38mm" | "50mm", string> = {
+        "19mm": "3M_HT_S23_19",
+        "25mm": "3M_HT_S23_25",
+        "38mm": "3M_HT_S23_38",
+        "50mm": "3M_HT_S23_50",
+      };
 
-      const sku = "";
+      const sku = skuMap[formData.size as "19mm" | "25mm" | "38mm" | "50mm"];
+
       const quantity = formData.quantity;
-      const name = `Scotch cast 450 ${formData.size}`;
+      const name = `Scotch 23 ${formData.size}`;
 
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/order`,
@@ -118,10 +125,8 @@ export default function Component() {
             <div className="w-full lg:w-1/2 p-6 flex flex-col justify-between">
               <div className="space-y-6">
                 <div>
-                  <h1 className="text-3xl font-bold mb-2">Scotch cast 450</h1>
-                  <p className="text-gray-600">
-                    High-quality cable for various applications
-                  </p>
+                  <h1 className="text-3xl font-bold mb-2">Scotch 23</h1>
+                  <p className="text-gray-600">High-quality 3M products</p>
                 </div>
 
                 <div className="space-y-4">
