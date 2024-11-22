@@ -9,6 +9,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import LoadingSpinner from '@/components/loader'
 import Navigation from '@/components/navigation'
+import { toast } from '@/hooks/use-toast'
+import axios from 'axios'
+import { updateLocalStorageArray } from '@/utils/localstorage'
 
 export default function Component() {
   const [formData, setFormData] = useState({
@@ -27,16 +30,45 @@ export default function Component() {
     "/placeholder.svg?height=600&width=600&text=Image+4",
   ]
 
-  const sizeOptions = ['2mm', '4mm', '8mm', '10mm']
-  const voltageOptions = ['110V', '220V', '240V', '380V', '415V', '480V']
+  const sizeOptions = ['35/12 mm', '55/20 mm', '70/30 mm', '100/40 mm', '160/50 mm', '205/60 mm']
+  const voltageOptions = ['22 kV', '33 kV', '52 kV']
 
   const handleInputChange = (field: string, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  const handleAddToCart = () => {
-    console.log('Added to cart:', formData)
-  }
+  const handleAddToCart = async () => {
+    if (!formData.size) {
+      toast({ description: "Please select a size type." });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+
+      const sku = `3M_HS_BB_${formData.voltage.split(" ")[0]}_${formData.size.split(" ")[0]}`;
+      const quantity = formData.quantity;
+      const name = `Bus Bar Insulating ${formData.size} ${formData.voltage}`;
+
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/order`,
+        { sku, quantity, name }
+      );
+
+      if (res?.data?.id) {
+        const key = "3mItems";
+        updateLocalStorageArray(key, res.data.id);
+      }
+
+      toast({ description: "Added to Cart Successfully" });
+    } catch (error) {
+      console.error(error);
+      toast({ description: "Failed to add to cart, please try again." });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
