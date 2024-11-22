@@ -35,7 +35,7 @@ export default function Component() {
     "/placeholder.svg?height=600&width=600&text=Image+4",
   ];
 
-  const sizeOption = ["N size"];
+  const sizeOption = ["3.17mm"];
 
   const handleInputChange = (field: string, value: string | number) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -51,9 +51,9 @@ export default function Component() {
 
     try {
 
-      const sku = "";
+      const sku = "3M_WPT_SF";
       const quantity = formData.quantity;
-      const name = `Scotch cast 450 ${formData.size}`;
+      const name = `Scotch Fil ${formData.size}`;
 
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/order`,
@@ -118,9 +118,9 @@ export default function Component() {
             <div className="w-full lg:w-1/2 p-6 flex flex-col justify-between">
               <div className="space-y-6">
                 <div>
-                  <h1 className="text-3xl font-bold mb-2">Scotch cast 450</h1>
+                  <h1 className="text-3xl font-bold mb-2">Scotch Fil</h1>
                   <p className="text-gray-600">
-                    High-quality cable for various applications
+                    High-quality 3M products
                   </p>
                 </div>
 

@@ -8,7 +8,7 @@ import Cart from "@/components/cart"
 
 const products = [
     { name: "Monoplast", image: "/placeholder.svg?height=200&width=200", slug: "monoplast" },
-    { name: "Scotch Fill", image: "/placeholder.svg?height=200&width=200", slug: "scotch-fill" },
+    { name: "Scotch Fil", image: "/placeholder.svg?height=200&width=200", slug: "scotch-fil" },
 ]
 
 export default function Component() {
@@ -34,7 +34,7 @@ export default function Component() {
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back
           </Button>
-          <h1 className="text-3xl font-bold text-center flex-grow">Heat Shrink Sleeves</h1>
+          <h1 className="text-3xl font-bold text-center flex-grow">Weather Proof Maistic Tape</h1>
           <div className="pr-[1rem]"><Cart /></div> 
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
