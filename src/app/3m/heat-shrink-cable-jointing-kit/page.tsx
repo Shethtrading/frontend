@@ -173,21 +173,32 @@ export default function Component() {
     console.log("Form Data:", formData);
     const name = `${formData.cableType} ${formData.termination} ${formData.voltage} ${formData.core} ${formData.size} ${formData.material}`;
 
-    updatingCart(sku, formData.quantity, name);
+    updatingCart(sku, formData.quantity, name, terminationType, formData);
   };
 
-  const updatingCart = async (sku: string, quantity: any, name: string) => {
+  const updatingCart = async (sku: string, quantity: any, name: string, terminationType: string, formData: any) => {
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/order`,
-        { sku: sku, quantity: quantity, name: name }
+        {
+          technology: "HeatShrink",
+          type: terminationType,
+          voltage: formData.voltage,
+          core: formData.core,  // Removed .toUpperCase()
+          size: formData.size,  // Removed .replace()
+          cabletype: formData.cableType,
+          conductor: formData.material,  // Removed .toUpperCase() here as well
+          sku: sku,
+          quantity: quantity,
+          name: name
+        }
       );
-
+  
       if (res?.data?.id) {
         const key = "3mItems";
         updateLocalStorageArray(key, res.data.id);
       }
-
+  
       toast({
         description: "Added to Cart Successfully",
       });
@@ -197,6 +208,7 @@ export default function Component() {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="container mx-auto px-4 py-4">
