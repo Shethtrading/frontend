@@ -110,15 +110,9 @@ export default function ReplyModal({
               <p>{enquiry.user_phone}</p>
             </div>
           </div>
-          <div className="bg-muted p-4 rounded-md">
-            <Label htmlFor="message" className="font-medium">
-              Message
-            </Label>
-            <p className="mt-1">{enquiry.user_name}</p>
-          </div>
           <div>
             <Label className="font-medium">Items</Label>
-            <ScrollArea className="h-[200px] w-full rounded-md border p-4">
+            <ScrollArea className=" w-full rounded-md border p-4">
               <Table>
                 <TableHeader>
                   <TableRow>
