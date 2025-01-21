@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import type React from "react"
+import { useState, useEffect } from "react"
 import {
   Dialog,
   DialogContent,
@@ -6,94 +7,108 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
+} from "@/components/ui/dialog"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
+import axios from "axios"
+import { toast } from "@/hooks/use-toast"
 
 interface Order {
-  order_id: number;
-  sku?: any;
-  cat_no?: any;
-  quantity: number;
-  product_price?: any;
+  order_id: string
+  sku?: string
+  cat_no?: string
+  quantity: number
+  product_price?: number
 }
 
-type EnquiryStatus = "New" | "Opened" | "Fulfilled";
+type EnquiryStatus = "New" | "Opened" | "Fulfilled"
 
 interface Enquiry {
-  cart_id: number;
-  cart_status: EnquiryStatus;
-  user_name: string;
-  user_email: string;
-  user_phone: string;
-  orders: Order[];
+  cart_id: number
+  cart_status: EnquiryStatus
+  user_name: string
+  user_email: string
+  user_phone: string
+  orders: Order[]
 }
 
-export default function ReplyModal({
-  enquiry,
-  setEnquiries,
-  onClose,
-  isOpen,
-}: {
-  enquiry: Enquiry;
-  setEnquiries: any;
-  onClose: any;
-  isOpen: boolean;
-}) {
-  const handleSendReply = (enquiry: any, replyMessage: string) => {
-    const updatedEnquiries = enquiry.map((e) =>
-      e.id === enquiry.id ? { ...e, status: "opened" } : e
-    );
-    setEnquiries(updatedEnquiries);
-    console.log(`Reply sent to ${enquiry.email}: ${replyMessage}`);
-    console.log("Updated items:", enquiry.items);
-  };
+interface ReplyModalProps {
+  enquiry: Enquiry
+  setEnquiries: React.Dispatch<React.SetStateAction<Enquiry[]>>
+  onClose: () => void
+  isOpen: boolean
+}
 
-  const handleInputChange = (field: string, value: any, index: number) => {
-    setEnquiries((prevEnquiries: any) =>
-      prevEnquiries.map((e: any) =>
-        e.id === enquiry.id
-          ? {
-              ...e,
-              items: e.items.map((item: any, i: number) =>
-                i === index ? { ...item, [field]: value } : item
-              ),
-            }
-          : e
-      )
-    );
-  };
+export default function ReplyModal({ enquiry, setEnquiries, onClose, isOpen }: ReplyModalProps) {
+  const [formState, setFormState] = useState({
+    details: {
+      Payment: "",
+      Validity: "",
+      //Reply: "",
+    },
+    items: enquiry.orders.map((order) => ({
+      cart_id: enquiry.cart_id,
+      order_id: order.order_id,
+      rate: order.product_price || 0,
+      discount: 0,
+      delivery: "",
+    })),
+  })
 
-  // useEffect(() => {
-  //   console.log(enquiry);
-  // }, []);
+  useEffect(() => {
+    setFormState((prevState) => ({
+      ...prevState,
+      items: enquiry.orders.map((order, index) => ({
+        ...prevState.items[index],
+        cart_id: enquiry.cart_id,
+        order_id: order.order_id,
+        rate: order.product_price || 0,
+      })),
+    }))
+  }, [enquiry])
+
+  const handleInputChange = (field: string, value: string | number, index?: number) => {
+    if (index !== undefined) {
+      setFormState((prevState) => ({
+        ...prevState,
+        items: prevState.items.map((item, i) => (i === index ? { ...item, [field]: value } : item)),
+      }))
+    } else {
+      setFormState((prevState) => ({
+        ...prevState,
+        details: { ...prevState.details, [field]: value },
+      }))
+    }
+  }
+
+  const handleSendReply = async () => {
+    console.log("API body:", formState)
+    // Here you would typically send the formState to your API
+    try {
+      const res = await axios.post("http://localhost:8282/api/v1/quotation", formState)
+      toast({
+        title: "Reply sent Successfully"
+      })
+      onClose()
+
+    } catch (error) {
+      console.error("Error sending reply:", error)
+      
+    }
+    
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[840px] max-h-[80vh] overflow-y-auto mx-[1rem]">
+      <DialogContent className="max-w-[840px] max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Enquiry Details</DialogTitle>
-          <DialogDescription>
-            Enquiry from {enquiry.user_name}
-          </DialogDescription>
+          <DialogDescription>Enquiry from {enquiry.user_name}</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-3 gap-4 text-sm bg-muted p-4 rounded-md">
@@ -112,7 +127,7 @@ export default function ReplyModal({
           </div>
           <div>
             <Label className="font-medium">Items</Label>
-            <ScrollArea className=" w-full rounded-md border p-4">
+            <ScrollArea className="h-[300px] w-full rounded-md border p-4">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -120,35 +135,20 @@ export default function ReplyModal({
                     <TableHead>Quantity</TableHead>
                     <TableHead>Rate</TableHead>
                     <TableHead>Discount</TableHead>
+                    <TableHead>Delivery</TableHead>
                     <TableHead>Total</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {enquiry.orders.map((item: Order, index: number) => (
                     <TableRow key={index}>
-                      <TableCell>
-                        <Input
-                          type="text"
-                          value={item?.cat_no || item?.sku}
-                          onChange={(e) =>
-                            handleInputChange("name", e.target.value, index)
-                          }
-                          placeholder="Enter item name"
-                          className="w-24"
-                        />
-                      </TableCell>
+                      <TableCell>{item.sku || item.cat_no}</TableCell>
                       <TableCell>{item.quantity}</TableCell>
                       <TableCell>
                         <Input
                           type="number"
-                          value={item.product_price || ""}
-                          onChange={(e) =>
-                            handleInputChange(
-                              "rate",
-                              parseFloat(e.target.value),
-                              index
-                            )
-                          }
+                          value={formState.items[index].rate || ""}
+                          onChange={(e) => handleInputChange("rate", Number.parseFloat(e.target.value), index)}
                           placeholder="Enter rate"
                           className="w-24"
                         />
@@ -156,24 +156,24 @@ export default function ReplyModal({
                       <TableCell>
                         <Input
                           type="number"
-                          value={""}
-                          onChange={(e) =>
-                            handleInputChange(
-                              "discount",
-                              parseFloat(e.target.value),
-                              index
-                            )
-                          }
+                          value={formState.items[index].discount || ""}
+                          onChange={(e) => handleInputChange("discount", Number.parseFloat(e.target.value), index)}
                           placeholder="Discount"
                           className="w-24"
                         />
                       </TableCell>
                       <TableCell>
-                        {item?.product_price
-                          ? (
-                              (item?.product_price - 0) * //(item.discount || 0))
-                              item.quantity
-                            ).toFixed(2)
+                        <Input
+                          type="text"
+                          value={formState.items[index].delivery || ""}
+                          onChange={(e) => handleInputChange("delivery", e.target.value, index)}
+                          placeholder="Delivery"
+                          className="w-24"
+                        />
+                      </TableCell>
+                      <TableCell>
+                        {formState.items[index].rate
+                          ? ((formState.items[index].rate * item.quantity ) * (( 100 - formState.items[index].discount) / 100 ) ).toFixed(2)
                           : "-"}
                       </TableCell>
                     </TableRow>
@@ -183,60 +183,46 @@ export default function ReplyModal({
             </ScrollArea>
             <div className="mt-2 text-right font-medium">
               Total: $
-              {enquiry.orders
+              {formState.items
                 .reduce(
-                  (sum: number, item: any) =>
+                  (sum, item) =>
                     sum +
-                    ((item.rate || 0) - (item.discount || 0)) * item.quantity,
-                  0
+                    (item.rate - item.discount) * enquiry.orders.find((o) => o.order_id === item.order_id)!.quantity,
+                  0,
                 )
                 .toFixed(2)}
             </div>
           </div>
           <div>
-            <Label className="font-medium">Delivery</Label>
-            <Input
-              type="text"
-              placeholder="Enter delivery details"
-              className="w-full"
-            />
-          </div>
-          <div>
             <Label className="font-medium">Payment</Label>
-            <Select>
+            <Select value={formState.details.Payment} onValueChange={(value) => handleInputChange("Payment", value)}>
               <SelectTrigger>
                 <SelectValue placeholder="Select payment terms" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="immediate">Immediate</SelectItem>
-                <SelectItem value="after_performa">
-                  100% after Performa Invoice
-                </SelectItem>
+                <SelectItem value="after_performa">100% after Performa Invoice</SelectItem>
                 <SelectItem value="within_7_days">Within 7 days</SelectItem>
-                <SelectItem value="25_against_performa">
-                  25% against Performa
-                </SelectItem>
-                <SelectItem value="within_30_days">
-                  100% within 30 days
-                </SelectItem>
+                <SelectItem value="25_against_performa">25% against Performa</SelectItem>
+                <SelectItem value="within_30_days">100% within 30 days</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div>
             <Label className="font-medium">Validity</Label>
-            <Select>
+            <Select value={formState.details.Validity} onValueChange={(value) => handleInputChange("Validity", value)}>
               <SelectTrigger>
                 <SelectValue placeholder="Select validity" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="7_days">7 Days</SelectItem>
                 <SelectItem value="10_days">10 Days</SelectItem>
+                <SelectItem value="14_days">14 Days</SelectItem>
                 <SelectItem value="15_days">15 Days</SelectItem>
-                <SelectItem value="2_days">2 Days</SelectItem>
               </SelectContent>
             </Select>
           </div>
-          <div>
+          {/* <div>
             <Label htmlFor="reply" className="font-medium">
               Reply
             </Label>
@@ -244,18 +230,18 @@ export default function ReplyModal({
               id="reply"
               className="h-20"
               placeholder="Type your reply here..."
+              value={formState.details.Reply}
+              onChange={(e) => handleInputChange("Reply", e.target.value)}
             />
-          </div>
+          </div> */}
         </div>
         <DialogFooter>
-          <Button
-            type="submit"
-            onClick={() => handleSendReply(enquiry, "Sample reply message")}
-          >
+          <Button type="submit" onClick={handleSendReply}>
             Send Reply
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
+  )
 }
+
