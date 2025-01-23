@@ -49,7 +49,7 @@ export default function ReplyModal({ enquiry, setEnquiries, onClose, isOpen }: R
     details: {
       Payment: "",
       Validity: "",
-      //Reply: "",
+      Reply: "",
     },
     items: enquiry.orders.map((order) => ({
       cart_id: enquiry.cart_id,
@@ -222,7 +222,7 @@ export default function ReplyModal({ enquiry, setEnquiries, onClose, isOpen }: R
               </SelectContent>
             </Select>
           </div>
-          {/* <div>
+          <div>
             <Label htmlFor="reply" className="font-medium">
               Reply
             </Label>
@@ -233,7 +233,7 @@ export default function ReplyModal({ enquiry, setEnquiries, onClose, isOpen }: R
               value={formState.details.Reply}
               onChange={(e) => handleInputChange("Reply", e.target.value)}
             />
-          </div> */}
+          </div>
         </div>
         <DialogFooter>
           <Button type="submit" onClick={handleSendReply}>

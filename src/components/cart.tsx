@@ -102,9 +102,14 @@ export default function Cart() {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/create`,
         { email: email, orderIds }
       );
+      console.log("Response:", res.data);
+      const res1 = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/enquiryMail`,
+        { email: email, cart_id: res.data.cart_id }
+      );
       localStorage.removeItem("3mItems");
       toast({ description: "Quote request sent successfully!" });
-      console.log("Response:", res.data);
+      
     } catch (error) {
       console.error("Error occurred:", error);
       toast({ description: "Failed to get a quote. Please try again." });
