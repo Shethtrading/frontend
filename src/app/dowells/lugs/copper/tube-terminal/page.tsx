@@ -8,55 +8,14 @@ import Cart from "@/components/cart";
 
 const products = [
   {
-    name: "Tube Terminal",
+    name: "Heavy Duty",
     image: "/placeholder.svg?height=200&width=200",
-    slug: "tube-terminal",
+    slug: "heavy-duty",
   },
   {
-    name: "Snap on Terminal",
+    name: "Medium Duty",
     image: "/placeholder.svg?height=200&width=200",
-    slug: "snap-terminal",
-  },
-  {
-    name: "On Demand ",
-    image: "/placeholder.svg?height=200&width=200",
-    slug: "on-demand",
-  },
-
-  {
-    name: "Ring Type ",
-    image: "/placeholder.svg?height=200&width=200",
-    slug: "ring-type",
-  },
-
-  {
-    name: "Fork Type ",
-    image: "/placeholder.svg?height=200&width=200",
-    slug: "fork-type",
-  },
-
-  {
-    name: "Pin Type ",
-    image: "/placeholder.svg?height=200&width=200",
-    slug: "pin-type",
-  },
-
-  {
-    name: "Insulated end Sealing Ferrules ",
-    image: "/placeholder.svg?height=200&width=200",
-    slug: "insulated-end-sealing-ferrules",
-  },
-
-  {
-    name: "Reducer Type ",
-    image: "/placeholder.svg?height=200&width=200",
-    slug: "reducer-type",
-  },
-
-  {
-    name: "Inline Connector ",
-    image: "/placeholder.svg?height=200&width=200",
-    slug: "inline-connector",
+    slug: "medium-duty",
   },
 ];
 
@@ -64,7 +23,7 @@ export default function Component() {
   const router = useRouter();
 
   const handleCardClick = (slug: string) => {
-    router.push(`/dowells/lugs/copper/${slug}`);
+    router.push(`/dowells/lugs/copper/tube-terminal/${slug}`);
   };
 
   const handleBack = () => {
@@ -84,7 +43,7 @@ export default function Component() {
             Back
           </Button>
           <h1 className="text-3xl font-bold text-center flex-grow">
-            Dowells Lugs Copper Products
+            Dowells Lugs Aluminium Products
           </h1>
           <div className="pr-[1rem]">
             <Cart />

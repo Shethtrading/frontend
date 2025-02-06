@@ -8,63 +8,29 @@ import Cart from "@/components/cart";
 
 const products = [
   {
-    name: "Tube Terminal",
+    name: "Inline Connector Long Barrel",
+    image: "/placeholder.svg?height=200&width=200",
+    slug: "inline-connector",
+  },
+  {
+    name: "Tube Terminal Long Barrel",
     image: "/placeholder.svg?height=200&width=200",
     slug: "tube-terminal",
   },
   {
-    name: "Snap on Terminal",
-    image: "/placeholder.svg?height=200&width=200",
-    slug: "snap-terminal",
-  },
-  {
-    name: "On Demand ",
-    image: "/placeholder.svg?height=200&width=200",
-    slug: "on-demand",
-  },
-
-  {
-    name: "Ring Type ",
-    image: "/placeholder.svg?height=200&width=200",
-    slug: "ring-type",
-  },
-
-  {
-    name: "Fork Type ",
+    name: "Fork Type PreInsulated",
     image: "/placeholder.svg?height=200&width=200",
     slug: "fork-type",
   },
 
-  {
-    name: "Pin Type ",
-    image: "/placeholder.svg?height=200&width=200",
-    slug: "pin-type",
-  },
 
-  {
-    name: "Insulated end Sealing Ferrules ",
-    image: "/placeholder.svg?height=200&width=200",
-    slug: "insulated-end-sealing-ferrules",
-  },
-
-  {
-    name: "Reducer Type ",
-    image: "/placeholder.svg?height=200&width=200",
-    slug: "reducer-type",
-  },
-
-  {
-    name: "Inline Connector ",
-    image: "/placeholder.svg?height=200&width=200",
-    slug: "inline-connector",
-  },
 ];
 
 export default function Component() {
   const router = useRouter();
 
   const handleCardClick = (slug: string) => {
-    router.push(`/dowells/lugs/copper/${slug}`);
+    router.push(`/dowells/lugs/copper/on-demand/${slug}`);
   };
 
   const handleBack = () => {
