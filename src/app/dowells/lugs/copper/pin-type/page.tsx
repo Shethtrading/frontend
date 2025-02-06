@@ -22,8 +22,6 @@ const products = [
     image: "/placeholder.svg?height=200&width=200",
     slug: "double-grip",
   },
-
-
 ];
 
 export default function Component() {
