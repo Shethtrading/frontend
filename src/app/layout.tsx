@@ -31,7 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          <main className="relative">{children}</main>
+          <main className="relative bg-amber-50 bg-opacity-30">{children}</main>
         </Providers>
         <Toaster />
       </body>
