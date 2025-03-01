@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button"
 
 const navItems = [
   { name: "HOME", href: "/", active: true },
-  { name: "ABOUT US", href: "/about" },
+  { name: "ABOUT US", href: "/about-us" },
   { name: "PRODUCTS", href: "/products" },
-  { name: "PRICELIST & BROCHURE", href: "/pricelist" },
-  { name: "CONTACT US", href: "/contact" },
+  { name: "PRICELIST & BROCHURE", href: "/price-list" },
+  { name: "CONTACT US", href: "/contact-us" },
 ]
 
 export default function Navigation() {
@@ -31,7 +31,7 @@ export default function Navigation() {
               <li key={item.name}>
                 <a
                   href={item.href}
-                  className={`block py-2 text-sm font-semibold transition-colors hover:text-primary
+                  className={`block py-2 text-sm font-semibold transition-colors hover:text-amber-500
                     ${item.active ? "text-amber-900" : "text-white"}`}
                 >
                   {item.name}

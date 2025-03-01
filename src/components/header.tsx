@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <header className="border-b py-4 max-w-[76rem] mx-auto">
       <div className="container mx-auto flex flex-col items-center justify-between space-y-4 px-4 md:flex-row md:space-y-0">
-        <div className="flex items-center">
+        <div className="flex items-center flex-wrap">
           <Image
             src="/sheth_logo.png"
             alt="Sheth Trading Corporation Logo"

@@ -9,7 +9,7 @@ export default function Hero() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage:
-              "url('/hero.jpg')",
+              `url('/hero.jpg')`,
           }}
         >
           <div className="absolute inset-0 bg-black/50" />

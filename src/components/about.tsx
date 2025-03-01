@@ -1,6 +1,7 @@
 import { Users, Lightbulb, Phone } from "lucide-react";
 import Image from "next/image";
 import { Button } from "./ui/button";
+import AnimatedTitle from "./animated-title";
 
 export default function AboutCompany() {
   return (
@@ -9,7 +10,7 @@ export default function AboutCompany() {
         {/* Header with decorative lines */}
         <div className="mb-16 flex items-center justify-center space-x-4">
           <div className="h-[2px] w-12 bg-[#5C1E1E]" />
-          <h2 className="text-center text-2xl font-bold text-[#5C1E1E] md:text-3xl">
+          <h2 className="sub-title-2">
             ABOUT COMPANY
           </h2>
           <div className="h-[2px] w-12 bg-[#5C1E1E]" />

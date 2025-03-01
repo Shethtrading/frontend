@@ -35,12 +35,9 @@ export default function StepsGuide() {
     <section className="py-16 md:py-24">
       <div className="container mx-auto px-4">
         <div className="text-center">
-          <h3 className="mb-2 text-sm font-medium uppercase tracking-wider text-gray-500">
-            GUIDE TO USING THIS WEBSITE
-          </h3>
-          <h2 className="mb-16 text-3xl font-bold text-gray-900 md:text-4xl lg:text-[40px]">
-            Follow 4 Easy Work Steps
-          </h2>
+          <h3 className="sub-title">GUIDE TO USING THIS WEBSITE</h3>
+
+          <h2 className="title">Follow 4 Easy Work Steps</h2>
         </div>
 
         <div className="relative mx-auto max-w-6xl">

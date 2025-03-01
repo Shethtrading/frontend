@@ -119,4 +119,27 @@ body {
   }
 }
 
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.sub-title {
+  @apply mb-2 text-[0.75rem] sm:text-sm font-medium uppercase tracking-wider text-gray-500;
+}
+
+.title {
+  @apply mb-16 text-2xl sm:text-3xl font-bold text-gray-900 md:text-4xl lg:text-[40px];
+  animation: fadeInLeft 0.8s ease-out forwards;
+}
+
+.sub-title-2 {
+  @apply text-center text-xl sm:text-2xl font-bold text-[#5C1E1E] md:text-3xl;
+}
 
