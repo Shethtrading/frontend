@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Providers } from "./provider";
+import ScrollToTopButton from "@/components/go-up";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,7 +32,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          <main className="relative bg-amber-50 bg-opacity-30">{children}</main>
+          <main className="relative bg-amber-50 bg-opacity-30">
+            {children}
+            <ScrollToTopButton />
+          </main>
         </Providers>
         <Toaster />
       </body>
