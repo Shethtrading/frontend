@@ -6,8 +6,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Phone, Mail, MapPin } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ContactSection() {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,7 +19,7 @@ export default function ContactSection() {
     message: "",
   });
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
@@ -24,10 +27,90 @@ export default function ContactSection() {
     }));
   };
 
-  const handleSubmit = (e:any) => {
+  const validateForm = () => {
+    // Check if any field is empty
+    for (const key in formData) {
+      if ((formData as any)[key].trim() === "") {
+        toast({
+          variant: "destructive",
+          title: "Validation Error",
+          description: `Please fill in the ${
+            key.charAt(0).toUpperCase() + key.slice(1)
+          } field.`,
+        });
+        return false;
+      }
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast({
+        variant: "destructive",
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Here you would typically send the data to your backend
+
+    // Validate form before submission
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("http://localhost:8282/api/v1/userForm", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          body: formData.message, // Note: API expects "body" but form has "message"
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast({
+          title: "Message Sent Successfully",
+          description:
+            "Thank you for contacting us. We will get back to you soon.",
+        });
+
+        // Reset form after successful submission
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to send message. Please try again later.",
+      });
+      console.error("Form submission error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -41,7 +124,9 @@ export default function ContactSection() {
           <h3 className="text-lg font-semibold text-gray-800 mb-2 uppercase ">
             Phone
           </h3>
-          <p className="text-[#5C1E1E] font-semibold text-center">+91 (033) 2237 9239</p>
+          <p className="text-[#5C1E1E] font-semibold text-center">
+            +91 (033) 2237 9239
+          </p>
         </Card>
 
         {/* Email Card */}
@@ -52,7 +137,9 @@ export default function ContactSection() {
           <h3 className="text-lg font-semibold text-gray-800 mb-2 uppercase">
             Email
           </h3>
-          <p className="text-[#5C1E1E] font-semibold text-center">enquiry@shethtrading.com</p>
+          <p className="text-[#5C1E1E] font-semibold text-center">
+            enquiry@shethtrading.com
+          </p>
         </Card>
 
         {/* Address Card */}
@@ -96,6 +183,8 @@ export default function ContactSection() {
                 value={formData.name}
                 onChange={handleChange}
                 className="bg-white text-gray-800"
+                disabled={isSubmitting}
+                required
               />
               <Input
                 type="email"
@@ -104,6 +193,8 @@ export default function ContactSection() {
                 value={formData.email}
                 onChange={handleChange}
                 className="bg-white text-gray-800"
+                disabled={isSubmitting}
+                required
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -114,6 +205,8 @@ export default function ContactSection() {
                 value={formData.phone}
                 onChange={handleChange}
                 className="bg-white text-gray-800"
+                disabled={isSubmitting}
+                required
               />
               <Input
                 type="text"
@@ -122,6 +215,8 @@ export default function ContactSection() {
                 value={formData.subject}
                 onChange={handleChange}
                 className="bg-white text-gray-800"
+                disabled={isSubmitting}
+                required
               />
             </div>
             <Textarea
@@ -131,12 +226,15 @@ export default function ContactSection() {
               value={formData.message}
               onChange={handleChange}
               className="bg-white text-gray-800"
+              disabled={isSubmitting}
+              required
             />
             <Button
               type="submit"
-              className="bg-[#5C1E1E] text-white hover:bg-brown-900 transition-colors"
+              className="bg-[#5C1E1E] text-white hover:bg-[#4a1919] transition-colors"
+              disabled={isSubmitting}
             >
-              SEND A MESSAGE
+              {isSubmitting ? "SENDING..." : "SEND A MESSAGE"}
             </Button>
           </form>
         </div>

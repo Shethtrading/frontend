@@ -1,11 +1,12 @@
 "use client";
 
-import type React from "react";
+import React, { useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
 import { Mail, MapPin, Phone, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 
 const industriesWeServe = [
   "Power Generation & Distribution",
@@ -23,9 +24,57 @@ const usefulLinks = [
 ];
 
 export default function Footer() {
+  const [subscribeEmail, setSubscribeEmail] = useState("");
+  const subscribeToNewsletter = async (email: string) => {
+    // Check if email is empty or invalid
+    if (!email || !email.includes("@") || !email.includes(".")) {
+      toast({
+        variant: "destructive",
+        description: "Please enter a valid email address.",
+      });
+      return null;
+    }
+
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/mailSub`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast({
+          variant: "default",
+          description: "Thank you for subscribing.",
+        });
+        return data.data;
+      } else {
+        toast({
+          variant: "destructive",
+          description: data.message || "Failed to subscribe.",
+        });
+        return null;
+      }
+    } catch (error) {
+      console.error("Subscription error:", error);
+      toast({
+        variant: "destructive",
+        description: "Network error. Please try again.",
+      });
+      return null;
+    }
+  };
+
+  // Usage in your existing code:
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle subscription logic here
+    subscribeToNewsletter(subscribeEmail);
+    setSubscribeEmail("");
   };
 
   return (
@@ -72,6 +121,8 @@ export default function Footer() {
                 <Mail className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                 <input
                   type="email"
+                  value={subscribeEmail}
+                  onChange={(e) => setSubscribeEmail(e.target.value)}
                   placeholder="Enter your email address"
                   className="w-full rounded-md bg-[#2A2A2A] px-10 py-2 text-gray-300 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#993300]"
                 />
