@@ -29,10 +29,8 @@ export default function Component() {
   const [loading, setLoading] = useState(false);
 
   const productImages = [
-    "/placeholder.svg?height=600&width=600&text=Image+1",
-    "/placeholder.svg?height=600&width=600&text=Image+2",
-    "/placeholder.svg?height=600&width=600&text=Image+3",
-    "/placeholder.svg?height=600&width=600&text=Image+4",
+    "/dowells/lugs/alu/ic-xlpe/img1.png",
+    "/dowells/lugs/alu/ic-xlpe/img2.png",
   ];
 
   const packOptions = [
@@ -53,7 +51,6 @@ export default function Component() {
     { label: "800 / ALS-XL15", value: "ALS-XL15" },
     { label: "1000 / ALS-XL16", value: "ALS-XL16" },
   ];
-  
 
   const handleInputChange = (field: string, value: string | number) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -108,9 +105,20 @@ export default function Component() {
                     src={productImages[selectedImage]}
                     alt={`Product Image ${selectedImage + 1}`}
                     layout="fill"
-                    objectFit="cover"
+                    objectFit="contain"
                     className="rounded-lg"
                   />
+                  {/* Add download button - positioned absolutely */}
+                  {/* <div className="absolute -bottom-6 right-4 z-10">
+                    <a
+                      href="/dowells/lugs/alu/reducer/pdf.pdf"
+                      download
+                      className="flex items-center justify-center gap-1 p-2 bg-white/90 border rounded-md hover:bg-gray-100 transition-colors shadow-sm"
+                    >
+                      <Download className="h-3 w-3" />
+                      <span className="text-xs font-medium">Download PDF</span>
+                    </a>
+                  </div> */}
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 pb-4">
@@ -126,7 +134,8 @@ export default function Component() {
                       src={img}
                       alt={`Thumbnail ${index + 1}`}
                       layout="fill"
-                      objectFit="cover"
+                      objectFit="contain"
+                      className="rounded-lg"
                     />
                   </button>
                 ))}
@@ -137,10 +146,10 @@ export default function Component() {
             <div className="w-full lg:w-1/2 p-6 flex flex-col justify-between">
               <div className="space-y-6">
                 <div>
-                  <h1 className="text-3xl font-bold mb-2">IN-LINE CONNECTORS FOR XLPE CONDUCTORS</h1>
-                  <p className="text-gray-600">
-                    Product of Aluminium
-                  </p>
+                  <h1 className="text-3xl font-bold mb-2">
+                    IN-LINE CONNECTORS FOR XLPE CONDUCTORS
+                  </h1>
+                  <p className="text-gray-600">Product of Aluminium</p>
                 </div>
 
                 <div className="space-y-4">
