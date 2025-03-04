@@ -113,7 +113,7 @@ export default function Component() {
                           className="flex items-center justify-center gap-1 p-2 bg-white/90 border rounded-md hover:bg-gray-100 transition-colors shadow-sm"
                         >
                           <Download className="h-3 w-3" />
-                          <span className="text-xs font-medium">Download PDF</span>
+                          <span className="text-xs font-medium">Tech Sheet</span>
                         </a>
                       </div> 
                   */}

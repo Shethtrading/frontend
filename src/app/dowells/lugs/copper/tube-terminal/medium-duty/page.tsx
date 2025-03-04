@@ -117,7 +117,7 @@ export default function Component() {
             <div className="w-full lg:w-1/2 p-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
               <div className="sticky top-0 bg-background pt-4">
                 <div className="relative h-[300px] md:h-[400px] lg:h-[500px] mb-4">
-                <Image
+                  <Image
                     src={productImages[selectedImage]}
                     alt={`Product Image ${selectedImage + 1}`}
                     layout="fill"
@@ -132,7 +132,7 @@ export default function Component() {
                       className="flex items-center justify-center gap-1 p-2 bg-white/90 border rounded-md hover:bg-gray-100 transition-colors shadow-sm"
                     >
                       <Download className="h-3 w-3" />
-                      <span className="text-xs font-medium">Download PDF</span>
+                      <span className="text-xs font-medium">Tech Sheet</span>
                     </a>
                   </div>
                 </div>

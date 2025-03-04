@@ -60,7 +60,7 @@ export default function Component() {
     { label: "CACF-240-185 / 240-185", value: "CACF-240-185" },
     { label: "CACF-240-240 / 240-240", value: "CACF-240-240" },
   ];
-  
+
   const handleInputChange = (field: string, value: string | number) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -110,7 +110,7 @@ export default function Component() {
             <div className="w-full lg:w-1/2 p-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
               <div className="sticky top-0 bg-background pt-4">
                 <div className="relative h-[300px] md:h-[400px] lg:h-[500px] mb-4">
-                <Image
+                  <Image
                     src={productImages[selectedImage]}
                     alt={`Product Image ${selectedImage + 1}`}
                     layout="fill"
@@ -125,7 +125,7 @@ export default function Component() {
                       className="flex items-center justify-center gap-1 p-2 bg-white/90 border rounded-md hover:bg-gray-100 transition-colors shadow-sm"
                     >
                       <Download className="h-3 w-3" />
-                      <span className="text-xs font-medium">Download PDF</span>
+                      <span className="text-xs font-medium">Tech Sheet</span>
                     </a>
                   </div>
                 </div>
@@ -155,9 +155,7 @@ export default function Component() {
               <div className="space-y-6">
                 <div>
                   <h1 className="text-3xl font-bold mb-2">Inline Connector</h1>
-                  <p className="text-gray-600">
-                    Product of Aluminium
-                  </p>
+                  <p className="text-gray-600">Product of Aluminium</p>
                 </div>
 
                 <div className="space-y-4">

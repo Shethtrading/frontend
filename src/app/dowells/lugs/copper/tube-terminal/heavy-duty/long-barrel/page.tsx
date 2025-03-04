@@ -32,19 +32,19 @@ export default function Component() {
   const productImages = ["/dowells/lugs/copper/tube/heavy/long/img1.png"];
 
   const packOptions = [
-    { label: '25-8 / CUS-282', value: "CUS-282" },
-  { label: '35-8 / CUS-283', value: "CUS-283" },
-  { label: '50-8 / CUS-284', value: "CUS-284" },
-  { label: '70-10 / CUS-285', value: "CUS-285" },
-  { label: '95-12 / CUS-286', value: "CUS-286" },
-  { label: '120-12 / CUS-287', value: "CUS-287" },
-  { label: '150-12 / CUS-288', value: "CUS-288" },
-  { label: '185-12 / CUS-289', value: "CUS-289" },
-  { label: '240-16 / CUS-290', value: "CUS-290" },
-  { label: '300-16 / CUS-291', value: "CUS-291" },
-  { label: '400-20 / CUS-292', value: "CUS-292" },
-  { label: '500-21 / CUS-293', value: "CUS-293" },
-  { label: '630-21 / CUS-294', value: "CUS-294" },
+    { label: "25-8 / CUS-282", value: "CUS-282" },
+    { label: "35-8 / CUS-283", value: "CUS-283" },
+    { label: "50-8 / CUS-284", value: "CUS-284" },
+    { label: "70-10 / CUS-285", value: "CUS-285" },
+    { label: "95-12 / CUS-286", value: "CUS-286" },
+    { label: "120-12 / CUS-287", value: "CUS-287" },
+    { label: "150-12 / CUS-288", value: "CUS-288" },
+    { label: "185-12 / CUS-289", value: "CUS-289" },
+    { label: "240-16 / CUS-290", value: "CUS-290" },
+    { label: "300-16 / CUS-291", value: "CUS-291" },
+    { label: "400-20 / CUS-292", value: "CUS-292" },
+    { label: "500-21 / CUS-293", value: "CUS-293" },
+    { label: "630-21 / CUS-294", value: "CUS-294" },
   ];
 
   const handleInputChange = (field: string, value: string | number) => {
@@ -96,7 +96,7 @@ export default function Component() {
             <div className="w-full lg:w-1/2 p-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
               <div className="sticky top-0 bg-background pt-4">
                 <div className="relative h-[300px] md:h-[400px] lg:h-[500px] mb-4">
-                <Image
+                  <Image
                     src={productImages[selectedImage]}
                     alt={`Product Image ${selectedImage + 1}`}
                     layout="fill"
@@ -111,7 +111,7 @@ export default function Component() {
                       className="flex items-center justify-center gap-1 p-2 bg-white/90 border rounded-md hover:bg-gray-100 transition-colors shadow-sm"
                     >
                       <Download className="h-3 w-3" />
-                      <span className="text-xs font-medium">Download PDF</span>
+                      <span className="text-xs font-medium">Tech Sheet</span>
                     </a>
                   </div>
                 </div>
@@ -129,8 +129,8 @@ export default function Component() {
                       src={img}
                       alt={`Thumbnail ${index + 1}`}
                       layout="fill"
-                    objectFit="contain"
-                    className="rounded-lg"
+                      objectFit="contain"
+                      className="rounded-lg"
                     />
                   </button>
                 ))}
