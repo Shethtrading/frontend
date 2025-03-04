@@ -65,7 +65,7 @@ export default function Page() {
             <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
               <div className="relative w-full h-64 mb-6">
                 <Image
-                  src="/images/3m-pricelist-cover.jpg"
+                  src="/placeholder.svg"
                   alt="3M Pricelist Cover"
                   fill
                   className="object-cover rounded-md"
@@ -75,18 +75,18 @@ export default function Page() {
               <h3 className="text-gray-800 text-xl font-medium mb-5">
                 Pricelist PDF
               </h3>
-              <Link href="/downloads/3m-pricelist.pdf">
+              <a download href="/pdfs/3M-P.pdf">
                 <button className="bg-gradient-to-r from-[#5a1c0e] to-[#7a2b16] text-white text-sm font-medium py-2 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 uppercase">
                   Download Pricelist
                 </button>
-              </Link>
+              </a>
             </div>
 
             {/* Brochure Card */}
             <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
               <div className="relative w-full h-64 mb-6">
                 <Image
-                  src="/images/3m-brochure-cover.jpg"
+                  src="/placeholder.svg"
                   alt="3M Brochure Cover"
                   fill
                   className="object-cover rounded-md"
@@ -96,11 +96,11 @@ export default function Page() {
               <h3 className="text-gray-800 text-xl font-medium mb-5">
                 Brochure PDF
               </h3>
-              <Link href="/downloads/3m-brochure.pdf">
+              <a download href="/pdfs/3M-B.pdf">
                 <button className="bg-gradient-to-r from-[#5a1c0e] to-[#7a2b16] text-white text-sm font-medium py-2 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 uppercase">
                   Download Brochure
                 </button>
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -118,7 +118,7 @@ export default function Page() {
             <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
               <div className="relative w-full h-64 mb-6">
                 <Image
-                  src="/images/3m-pricelist-cover.jpg"
+                  src="/placeholder.svg"
                   alt="3M Pricelist Cover"
                   fill
                   className="object-cover rounded-md"
@@ -126,20 +126,20 @@ export default function Page() {
                 />
               </div>
               <h3 className="text-gray-800 text-xl font-medium mb-5">
-                Pricelist PDF
+                Dowells Pricelist PDF
               </h3>
-              <Link href="/downloads/3m-pricelist.pdf">
+              <a download href="/pdfs/D-P.pdf">
                 <button className="bg-gradient-to-r from-[#5a1c0e] to-[#7a2b16] text-white text-sm font-medium py-2 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 uppercase">
                   Download Pricelist
                 </button>
-              </Link>
+              </a>
             </div>
 
             {/* Brochure Card */}
             <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
               <div className="relative w-full h-64 mb-6">
                 <Image
-                  src="/images/3m-brochure-cover.jpg"
+                  src="/placeholder.svg"
                   alt="3M Brochure Cover"
                   fill
                   className="object-cover rounded-md"
@@ -147,20 +147,20 @@ export default function Page() {
                 />
               </div>
               <h3 className="text-gray-800 text-xl font-medium mb-5">
-                Brochure PDF
+                Glands Catalogue PDF
               </h3>
-              <Link href="/downloads/3m-brochure.pdf">
+              <a download href="/pdfs/G-C.pdf">
                 <button className="bg-gradient-to-r from-[#5a1c0e] to-[#7a2b16] text-white text-sm font-medium py-2 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 uppercase">
                   Download Brochure
                 </button>
-              </Link>
+              </a>
             </div>
 
             {/* Brochure Card */}
             <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center">
               <div className="relative w-full h-64 mb-6">
                 <Image
-                  src="/images/3m-brochure-cover.jpg"
+                  src="/placeholder.svg"
                   alt="3M Brochure Cover"
                   fill
                   className="object-cover rounded-md"
@@ -168,13 +168,13 @@ export default function Page() {
                 />
               </div>
               <h3 className="text-gray-800 text-xl font-medium mb-5">
-                Brochure PDF
+                Sockets Catalogue
               </h3>
-              <Link href="/downloads/3m-brochure.pdf">
+              <a download href="/pdfs/S-C.pdf">
                 <button className="bg-gradient-to-r from-[#5a1c0e] to-[#7a2b16] text-white text-sm font-medium py-2 px-6 rounded-full shadow-md hover:shadow-lg transition-all duration-300 uppercase">
                   Download Brochure
                 </button>
-              </Link>
+              </a>
             </div>
           </div>
         </div>

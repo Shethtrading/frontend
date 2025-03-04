@@ -17,8 +17,8 @@ export default function AboutCompany() {
         </div>
 
         {/* Main content grid */}
-        <div className="grid gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
-          {/* Images column */}
+        <div className=" gap-8 max-w-[56rem] mx-auto">
+          {/* Images column 
           <div className="space-y-6">
             <div className="relative h-[300px] w-full overflow-hidden rounded-lg">
               <Image
@@ -37,9 +37,10 @@ export default function AboutCompany() {
               />
             </div>
           </div>
+          */}
 
           {/* Content column */}
-          <div className="space-y-8 shadow-lg p-[1.5rem] rounded-lg bg-white">
+          <div className="space-y-12 shadow-lg p-[1.5rem] rounded-lg bg-white">
             {/* Main description */}
             <p className="text-gray-600 leading-relaxed">
               At Sheth Trading Corporation, we are committed to delivering

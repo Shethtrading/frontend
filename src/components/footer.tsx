@@ -112,7 +112,7 @@ export default function Footer() {
               />
             </div>
 
-            {/* Subscribe Form */}
+            {/* Subscribe Form 
             <form
               onSubmit={handleSubscribe}
               className="flex w-full max-w-md items-center gap-2"
@@ -133,7 +133,7 @@ export default function Footer() {
               >
                 SUBSCRIBE
               </Button>
-            </form>
+            </form> */}
           </div>
         </div>
       </div>
