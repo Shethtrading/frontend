@@ -53,9 +53,9 @@ export default function AboutCompany() {
             </p>
 
             {/* Our Team section */}
-            <div className="flex items-start space-x-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-[#5C1E1E]">
-                <Users className="h-6 w-6 text-[#5C1E1E]" />
+            <div className="flex flex-col items-center justify-center space-x-4">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#5C1E1E]">
+                <Users className="h-4 w-4 text-[#5C1E1E]" />
               </div>
               <div>
                 <h3 className="mb-2 text-xl font-semibold text-gray-900">
@@ -71,9 +71,9 @@ export default function AboutCompany() {
             </div>
 
             {/* Our Vision section */}
-            <div className="flex items-start space-x-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-[#5C1E1E]">
-                <Lightbulb className="h-6 w-6 text-[#5C1E1E]" />
+            <div className="flex flex-col items-center justify-center space-x-4">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-[#5C1E1E]">
+                <Lightbulb className="h-4 w-4 text-[#5C1E1E]" />
               </div>
               <div>
                 <h3 className="mb-2 text-xl font-semibold text-gray-900">

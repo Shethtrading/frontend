@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import Cart from "./cart";
 
 const navItems = [
-  { name: "HOME", href: "/", active: true },
+  { name: "HOME", href: "/" },
   { name: "ABOUT US", href: "/about-us" },
   { name: "PRODUCTS", href: "/products" },
   { name: "PRICELIST & BROCHURE", href: "/price-list" },
@@ -17,7 +17,11 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className=" bg-black bg-opacity-30 absolute z-50 w-[100%] text-white py-[1rem]">
+    <nav
+      className={`${
+        isOpen ? "bg-white text-black" : "bg-black bg-opacity-30 text-white"
+      }  absolute z-50 w-[100%]  py-[0.25rem] md:py-[1rem]`}
+    >
       <div className="container mx-auto px-4 max-w-[76rem]">
         <div className="flex items-center justify-between py-4 lg:hidden">
           <span className="font-semibold">Menu</span>
@@ -42,7 +46,7 @@ export default function Navigation() {
                   <a
                     href={item.href}
                     className={`block py-2 text-sm font-semibold transition-colors hover:text-amber-500 
-                      ${item.active ? "text-amber-900" : "text-white"}`}
+                     `}
                   >
                     {item.name}
                   </a>

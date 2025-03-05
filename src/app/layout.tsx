@@ -31,12 +31,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>
-          <main className="relative bg-amber-50 bg-opacity-30">
-            {children}
-            <ScrollToTopButton />
-          </main>
-        </Providers>
+        <main className="relative bg-amber-50 bg-opacity-30">
+          {children}
+          <ScrollToTopButton />
+        </main>
+
         <Toaster />
       </body>
     </html>

@@ -10,10 +10,13 @@ import OurClientsSection from "@/components/client";
 import CertificatesSection from "@/components/cert";
 import Footer from "@/components/footer";
 import AnimatedContainer from "@/components/animated-title";
+import Navigation from "@/components/nav-2";
 
 export default function Home() {
   return (
-    <main>
+    <main className="relative">
+
+      <Navigation />
       <TopBar />
       <Header />
 
