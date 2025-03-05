@@ -37,16 +37,16 @@ const OurClientsSection = () => {
         <div className="text-center mb-12">
           <div className="flex justify-center items-center gap-2 mb-4">
             <div className="h-0.5 w-12 bg-amber-800"></div>
-            <h2 className="text-amber-800 font-semibold text-lg uppercase tracking-wider">
+            <h2 className="sub-title-2">
               OUR CLIENTS
             </h2>
             <div className="h-0.5 w-12 bg-amber-800"></div>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-2">
+          <h1 className="title">
             Think Positive, Think Always
           </h1>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-700">
+          <h2 className="sub-title">
             Powering Your Business
           </h2>
         </div>
@@ -66,7 +66,7 @@ const OurClientsSection = () => {
                 key={client.id}
                 className="flex items-center justify-center p-8 bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300"
               >
-                <div className="relative h-16 w-full">
+                <div className="relative h-[10rem] w-full">
                   <Image
                     className="object-contain"
                     src={client.logo}

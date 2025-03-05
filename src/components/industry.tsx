@@ -57,7 +57,7 @@ export default function CustomIndustryCarousel() {
         <div className="mb-16 text-center">
           <div className="flex justify-center space-x-2">
             <div className="h-0.5 w-12 bg-[#5C1E1E] self-center" />
-            <h2 className="text-[#5C1E1E] text-lg font-semibold uppercase tracking-wider">
+            <h2 className="sub-title-2">
               Industries and Areas of Application
             </h2>
             <div className="h-0.5 w-12 bg-[#5C1E1E] self-center" />

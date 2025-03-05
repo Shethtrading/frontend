@@ -52,13 +52,13 @@ export default function CertificatesSection() {
         {/* Header with decorative lines */}
         <div className="mb-8 flex items-center justify-center space-x-4">
           <div className="h-[2px] w-12 bg-[#5C1E1E]" />
-          <h2 className="text-center text-2xl font-bold text-[#5C1E1E] md:text-3xl">OUR CERTIFICATES</h2>
+          <h2 className="sub-title-2">OUR CERTIFICATES</h2>
           <div className="h-[2px] w-12 bg-[#5C1E1E]" />
         </div>
 
         {/* Main Title */}
         <div className="mb-16 text-center">
-          <h3 className="text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl">
+          <h3 className="title">
             Authorized Distributor
             <br />
             Certificates
@@ -91,7 +91,7 @@ export default function CertificatesSection() {
               {certificates.map((certificate) => (
                 <div key={certificate.id} className="w-full flex-shrink-0 px-4">
                   <div className="overflow-hidden rounded-lg bg-white p-6 shadow-lg">
-                    <h4 className="mb-6 text-center text-2xl font-semibold text-gray-900">{certificate.title}</h4>
+                    <h4 className="title">{certificate.title}</h4>
                     <div className="relative h-[300px] w-full">
                       <Image
                         src={certificate.image || "/placeholder.svg"}

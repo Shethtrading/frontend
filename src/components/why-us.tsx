@@ -26,7 +26,7 @@ export default function WhyChooseUs() {
         {/* Header with decorative lines */}
         <div className="mb-8 flex items-center justify-center space-x-4">
           <div className="h-[2px] w-12 bg-[#5C1E1E]" />
-          <h2 className="text-center text-2xl font-bold text-[#5C1E1E] md:text-3xl">
+          <h2 className="sub-title-2">
             WHY CHOOSE US?
           </h2>
           <div className="h-[2px] w-12 bg-[#5C1E1E]" />
@@ -34,7 +34,7 @@ export default function WhyChooseUs() {
 
         {/* Main Title */}
         <div className="mb-16 text-center">
-          <h3 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl lg:text-5xl">
+          <h3 className="title">
             Customer-Centric Service
           </h3>
           <p className="text-gray-600">

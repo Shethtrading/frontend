@@ -272,14 +272,9 @@ export default function Page() {
         <div className="container mx-auto max-w-[76rem] px-4 md:px-6">
           {/* Section Header */}
           <div className="text-center mb-12">
-            <h3 className="text-gray-500 uppercase tracking-wider text-sm md:text-base mb-3">
-              THE BEST INDUSTRY SERVICES
-            </h3>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800">
-              Provide Awesome Services
-            </h2>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800">
-              For Industrial Company
+            <h3 className="sub-title">THE BEST INDUSTRY SERVICES</h3>
+            <h2 className="title">
+              Provide Awesome Services <br></br> For Industrial Company
             </h2>
           </div>
 

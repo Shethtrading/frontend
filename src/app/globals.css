@@ -135,11 +135,10 @@ body {
 }
 
 .title {
-  @apply mb-16 text-2xl sm:text-3xl font-bold text-gray-900 md:text-4xl lg:text-[40px];
-  animation: fadeInLeft 0.8s ease-out forwards;
+  @apply mb-6 text-2xl sm:text-3xl font-bold text-gray-900 md:text-4xl lg:text-[40px];
 }
 
 .sub-title-2 {
-  @apply text-center text-xl sm:text-2xl font-bold text-[#5C1E1E] md:text-3xl;
+  @apply text-center text-base sm:text-xl font-bold text-[#5C1E1E] md:text-2xl;
 }
 
