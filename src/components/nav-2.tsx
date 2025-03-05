@@ -48,15 +48,15 @@ export default function Navigation({ alwaysVisible = false }) {
         >
           <div className="container mx-auto px-4 max-w-[76rem]">
             <div className="flex items-center justify-between py-4 lg:hidden">
-              <span className="font-semibold">
+              <a href="/" className="font-semibold">
                 <Image
                   src="/sheth_logo.png"
                   alt="Sheth Trading Corporation Logo"
                   width={200}
                   height={60}
-                  className="h-auto w-48"
+                  className="h-auto w-32"
                 />
-              </span>
+              </a>
               <Button
                 variant="ghost"
                 size="icon"
@@ -85,9 +85,21 @@ export default function Navigation({ alwaysVisible = false }) {
                     </li>
                   ))}
                 </div>
-                <li className="lg:ml-auto">
-                  <Cart />
-                </li>
+                {!alwaysVisible ? (
+                  <li className="lg:ml-auto">
+                    <Cart />
+                  </li>
+                ) : (
+                  <a href="/" className="font-semibold">
+                    <Image
+                      src="/sheth_logo.png"
+                      alt="Sheth Trading Corporation Logo"
+                      width={100}
+                      height={20}
+                      className="h-auto w-28"
+                    />
+                  </a>
+                )}
               </ul>
             </div>
           </div>

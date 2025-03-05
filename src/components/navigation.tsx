@@ -15,7 +15,7 @@ export default function Navigation() {
     <div className="flex justify-between items-center pr-2">
       <Button variant="ghost" className="mb-4" onClick={handleBack}>
         <ArrowLeft className="mr-2 h-4 w-4" />
-        Back
+        <span className="hidden sm:block">Back</span>
       </Button>
       <Cart />
     </div>

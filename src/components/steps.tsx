@@ -40,7 +40,7 @@ export default function StepsGuide() {
           <h2 className="title">Follow 4 Easy Work Steps</h2>
         </div>
 
-        <div className="relative mx-auto max-w-6xl">
+        <div className="relative mx-auto max-w-6xl mt-[5rem]">
           {/* Connecting Lines - Hidden on Mobile */}
           <div className="absolute left-0 right-0 top-[45%] hidden ">
             <div className="h-[1px] w-full bg-gray-200" />
