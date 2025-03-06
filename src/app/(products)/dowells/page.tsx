@@ -48,7 +48,7 @@ export default function Component() {
             <span className="hidden sm:block">Back</span>
           </Button>
           <h1 className="text-3xl font-bold text-center flex-grow">
-            3M Products
+            Dowells Products
           </h1>
           <div className="pr-[1rem]">
             <Cart />
