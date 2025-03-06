@@ -28,12 +28,7 @@ export default function Component() {
   const [selectedImage, setSelectedImage] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const productImages = [
-    "/placeholder.svg?height=600&width=600&text=Image+1",
-    "/placeholder.svg?height=600&width=600&text=Image+2",
-    "/placeholder.svg?height=600&width=600&text=Image+3",
-    "/placeholder.svg?height=600&width=600&text=Image+4",
-  ];
+  const productImages = ["/dowells/lugs/copper/ring/insulated/img1.png"];
 
   const packOptions = [
     { label: "0.75-4 / RSI-7501", value: "RSI-7501" },
@@ -127,7 +122,7 @@ export default function Component() {
                     src={productImages[selectedImage]}
                     alt={`Product Image ${selectedImage + 1}`}
                     layout="fill"
-                    objectFit="cover"
+                    objectFit="contain"
                     className="rounded-lg"
                   />
                 </div>

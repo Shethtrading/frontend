@@ -18,6 +18,7 @@ import { updateLocalStorageArray } from "@/utils/localstorage";
 import { toast } from "@/hooks/use-toast";
 import LoadingSpinner from "@/components/loader";
 import Navigation from "@/components/navigation";
+import { Download } from "lucide-react";
 
 export default function Component() {
   const [formData, setFormData] = useState({
@@ -29,10 +30,8 @@ export default function Component() {
   const [loading, setLoading] = useState(false);
 
   const productImages = [
-    "/placeholder.svg?height=600&width=600&text=Image+1",
-    "/placeholder.svg?height=600&width=600&text=Image+2",
-    "/placeholder.svg?height=600&width=600&text=Image+3",
-    "/placeholder.svg?height=600&width=600&text=Image+4",
+    "/dowells/lugs/copper/reducer/img1.png",
+    "/dowells/lugs/copper/reducer/img2.png",
   ];
 
   const packOptions = [
@@ -132,9 +131,20 @@ export default function Component() {
                     src={productImages[selectedImage]}
                     alt={`Product Image ${selectedImage + 1}`}
                     layout="fill"
-                    objectFit="cover"
+                    objectFit="contain"
                     className="rounded-lg"
                   />
+                  {/* Add download button - positioned absolutely */}
+                  <div className="absolute -bottom-6 right-4 z-10">
+                    <a
+                      href="/dowells/lugs/copper/reducer/pdf.pdf"
+                      download
+                      className="flex items-center justify-center gap-1 p-2 bg-white/90 border rounded-md hover:bg-gray-100 transition-colors shadow-sm"
+                    >
+                      <Download className="h-3 w-3" />
+                      <span className="text-xs font-medium">Tech Sheet</span>
+                    </a>
+                  </div>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 pb-4">
