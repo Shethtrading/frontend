@@ -66,13 +66,13 @@ export default function Component() {
               className="flex flex-col md:flex-row overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
               onClick={() => handleCardClick(product.slug)}
             >
-              <div className="w-full md:w-1/2 h-48 md:h-auto">
+              {/* <div className="w-full md:w-1/2 h-48 md:h-auto">
                 <img
                   src={product.image}
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
-              </div>
+              </div> */}
               <CardContent className="flex-1 flex items-center justify-center p-4">
                 <h2 className="text-xl font-semibold text-center md:text-left">
                   {product.name}

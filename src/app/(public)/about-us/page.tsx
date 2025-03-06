@@ -60,164 +60,115 @@ export default function Page() {
             </h3>
           </div>
 
-          {/* Main Content Area */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            {/* Left Column - Images */}
-            <div className="space-y-4">
-              <div className="relative w-full h-[350px] md:h-[400px]">
-                <Image
-                  src=""
-                  alt="Electrical installation with red cables"
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
+          {/* Right Column - Text Content */}
+          <div className="space-y-6 text-center">
+            <div>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
+                Welcome to Sheth Trading Corporation
+              </h1>
+              <h2 className="text-2xl md:text-3xl font-semibold text-gray-700 mb-6">
+                3M and Dowell's Dealer in Kolkata
+              </h2>
+              <p className="text-gray-600 mb-4">
+                3M India Ltd, a subsidiary of the American multinational 3M, is
+                known for its innovation and quality. Based in Maplewood,
+                Minnesota, 3M offers
+              </p>
+              <p className="text-gray-600">
+                Since 1969, Dowell's has been a pioneer in solderless crimping
+                technology in India. Its high standards have made it a leader in
+              </p>
             </div>
 
-            {/* Right Column - Text Content */}
-            <div className="space-y-6">
-              <div>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
-                  Welcome to Sheth Trading Corporation
-                </h1>
-                <h2 className="text-2xl md:text-3xl font-semibold text-gray-700 mb-6">
-                  3M and Dowell's Dealer in Kolkata
-                </h2>
-                <p className="text-gray-600 mb-4">
-                  3M India Ltd, a subsidiary of the American multinational 3M,
-                  is known for its innovation and quality. Based in Maplewood,
-                  Minnesota, 3M offers
-                </p>
-                <p className="text-gray-600">
-                  Since 1969, Dowell's has been a pioneer in solderless crimping
-                  technology in India. Its high standards have made it a leader
-                  in
-                </p>
+            {/* Product Categories */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6 items-center">
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-amber-50 flex-shrink-0">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <circle cx="12" cy="12" r="10" className="fill-amber-800" />
+                    <path d="M10 17l-5-5 1.41-1.42L10 14.17l7.59-7.59L19 8l-9 9z" />
+                  </svg>
+                </span>
+                <span className="text-amber-800 font-medium">
+                  Heat Shrink Solution
+                </span>
               </div>
-
-              {/* Product Categories */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6">
-                <div className="flex items-center gap-2">
-                  <span className="text-amber-50 flex-shrink-0">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        className="fill-amber-800"
-                      />
-                      <path d="M10 17l-5-5 1.41-1.42L10 14.17l7.59-7.59L19 8l-9 9z" />
-                    </svg>
-                  </span>
-                  <span className="text-amber-800 font-medium">
-                    Heat Shrink Solution
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-amber-50 flex-shrink-0">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        className="fill-amber-800"
-                      />
-                      <path d="M10 17l-5-5 1.41-1.42L10 14.17l7.59-7.59L19 8l-9 9z" />
-                    </svg>
-                  </span>
-                  <span className="text-amber-800 font-medium">
-                    Auxiliary Products
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-amber-50 flex-shrink-0">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        className="fill-amber-800"
-                      />
-                      <path d="M10 17l-5-5 1.41-1.42L10 14.17l7.59-7.59L19 8l-9 9z" />
-                    </svg>
-                  </span>
-                  <span className="text-amber-800 font-medium">
-                    Scotch Tapes and Compounds
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-amber-50 flex-shrink-0">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        className="fill-amber-800"
-                      />
-                      <path d="M10 17l-5-5 1.41-1.42L10 14.17l7.59-7.59L19 8l-9 9z" />
-                    </svg>
-                  </span>
-                  <span className="text-amber-800 font-medium">
-                    Cable End Terminals
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-amber-50 flex-shrink-0">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        className="fill-amber-800"
-                      />
-                      <path d="M10 17l-5-5 1.41-1.42L10 14.17l7.59-7.59L19 8l-9 9z" />
-                    </svg>
-                  </span>
-                  <span className="text-amber-800 font-medium">
-                    Cable Glands
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-amber-50 flex-shrink-0">
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        className="fill-amber-800"
-                      />
-                      <path d="M10 17l-5-5 1.41-1.42L10 14.17l7.59-7.59L19 8l-9 9z" />
-                    </svg>
-                  </span>
-                  <span className="text-amber-800 font-medium">
-                    Crimping Tools
-                  </span>
-                </div>
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-amber-50 flex-shrink-0">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <circle cx="12" cy="12" r="10" className="fill-amber-800" />
+                    <path d="M10 17l-5-5 1.41-1.42L10 14.17l7.59-7.59L19 8l-9 9z" />
+                  </svg>
+                </span>
+                <span className="text-amber-800 font-medium">
+                  Auxiliary Products
+                </span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-amber-50 flex-shrink-0">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <circle cx="12" cy="12" r="10" className="fill-amber-800" />
+                    <path d="M10 17l-5-5 1.41-1.42L10 14.17l7.59-7.59L19 8l-9 9z" />
+                  </svg>
+                </span>
+                <span className="text-amber-800 font-medium">
+                  Scotch Tapes and Compounds
+                </span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-amber-50 flex-shrink-0">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <circle cx="12" cy="12" r="10" className="fill-amber-800" />
+                    <path d="M10 17l-5-5 1.41-1.42L10 14.17l7.59-7.59L19 8l-9 9z" />
+                  </svg>
+                </span>
+                <span className="text-amber-800 font-medium">
+                  Cable End Terminals
+                </span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-amber-50 flex-shrink-0">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <circle cx="12" cy="12" r="10" className="fill-amber-800" />
+                    <path d="M10 17l-5-5 1.41-1.42L10 14.17l7.59-7.59L19 8l-9 9z" />
+                  </svg>
+                </span>
+                <span className="text-amber-800 font-medium">Cable Glands</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-amber-50 flex-shrink-0">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-5 h-5"
+                  >
+                    <circle cx="12" cy="12" r="10" className="fill-amber-800" />
+                    <path d="M10 17l-5-5 1.41-1.42L10 14.17l7.59-7.59L19 8l-9 9z" />
+                  </svg>
+                </span>
+                <span className="text-amber-800 font-medium">
+                  Crimping Tools
+                </span>
               </div>
             </div>
           </div>
