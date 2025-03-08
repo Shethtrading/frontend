@@ -13,7 +13,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Download } from "lucide-react";
 import LoadingSpinner from "@/components/loader";
 import Navigation from "@/components/navigation";
 import { updateLocalStorageArray } from "@/utils/localstorage";
@@ -30,10 +30,7 @@ export default function Component() {
   const [selectedImage, setSelectedImage] = useState(0);
 
   const productImages = [
-    "/placeholder.svg?height=600&width=600",
-    "/placeholder.svg?height=600&width=600&text=Image+2",
-    "/placeholder.svg?height=600&width=600&text=Image+3",
-    "/placeholder.svg?height=600&width=600&text=Image+4",
+    "/3m/RED_INSULATION_SEALER/img1.png",
   ];
 
   const sizeOptions = ["AEROSOL 1602-R 12 OZ"];
@@ -85,13 +82,24 @@ export default function Component() {
             <div className="w-full lg:w-1/2 p-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
               <div className="sticky top-0 bg-background pt-4">
                 <div className="relative h-[300px] md:h-[400px] lg:h-[500px] mb-4">
-                  <Image
+                <Image
                     src={productImages[selectedImage]}
                     alt={`Product Image ${selectedImage + 1}`}
                     layout="fill"
-                    objectFit="cover"
+                    objectFit="contain"
                     className="rounded-lg"
                   />
+                  {/* Add download button - positioned absolutely */}
+                  <div className="absolute -bottom-6 right-4 z-10">
+                    <a
+                      href="/3m/RED_INSULATION_SEALER/aerosol_red.pdf"
+                      download
+                      className="flex items-center justify-center gap-1 p-2 bg-white/90 border rounded-md hover:bg-gray-100 transition-colors shadow-sm"
+                    >
+                      <Download className="h-3 w-3" />
+                      <span className="text-xs font-medium">Tech Sheet</span>
+                    </a>
+                  </div>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2 pb-4">
