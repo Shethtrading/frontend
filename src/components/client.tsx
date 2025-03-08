@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "motion/react"
 
 const OurClientsSection = () => {
   const [activeSlide, setActiveSlide] = useState(0);
-
+  
   // Sample client data with two pages of clients
   const clientPages = [
     [
@@ -30,6 +30,15 @@ const OurClientsSection = () => {
     ],
   ];
 
+  // Auto carousel effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSlide(prev => (prev === 0 ? 1 : 0));
+    }, 4000);
+    
+    return () => clearInterval(interval);
+  }, []);
+  
   return (
     <div className="w-full bg-white py-12 md:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,7 +51,7 @@ const OurClientsSection = () => {
             </h2>
             <div className="h-0.5 w-12 bg-amber-800"></div>
           </div>
-
+          
           <h1 className="title">
             Think Positive, Think Always
           </h1>
@@ -50,7 +59,7 @@ const OurClientsSection = () => {
             Powering Your Business
           </h2>
         </div>
-
+        
         {/* Carousel with Animation */}
         <div className="relative overflow-hidden">
           <motion.div
@@ -78,7 +87,7 @@ const OurClientsSection = () => {
               </div>
             ))}
           </motion.div>
-
+          
           {/* Navigation Dots */}
           <div className="flex justify-center mt-8 space-x-2">
             {clientPages.map((_, index) => (

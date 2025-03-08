@@ -39,12 +39,36 @@ const useCarousel = (length: number) => {
 export default function CertificatesSection() {
   const { current, next, prev, goTo } = useCarousel(certificates.length)
   const [isAnimating, setIsAnimating] = useState(false)
+  const [autoplayDirection, setAutoplayDirection] = useState('forward')
 
   useEffect(() => {
     setIsAnimating(true)
     const timer = setTimeout(() => setIsAnimating(false), 300)
     return () => clearTimeout(timer)
-  }, [])
+  }, [current])
+
+  // Auto carousel effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (autoplayDirection === 'forward') {
+        if (current === certificates.length - 1) {
+          setAutoplayDirection('backward')
+          prev()
+        } else {
+          next()
+        }
+      } else {
+        if (current === 0) {
+          setAutoplayDirection('forward')
+          next()
+        } else {
+          prev()
+        }
+      }
+    }, 5000)
+    
+    return () => clearInterval(interval)
+  }, [current, next, prev, autoplayDirection])
 
   return (
     <section className="py-16 md:py-24">
@@ -124,4 +148,3 @@ export default function CertificatesSection() {
     </section>
   )
 }
-
