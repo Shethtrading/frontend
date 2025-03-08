@@ -49,7 +49,7 @@ export default function Component() {
           </Button>
 
           <h1 className="text-3xl font-bold text-center flex-grow">
-            3M Products
+          Dowells Products
           </h1>
           <div className="pr-[1rem]">
             <Cart />
