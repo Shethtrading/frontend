@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Bell, ChevronDown, HelpCircle, LayoutDashboard, LogOut, MessageSquare, Package, Settings, User } from 'lucide-react'
+import { Bell, ChevronDown, HelpCircle, LayoutDashboard, LogOut, MessageSquare, Package, Settings, User, Mails } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useTheme } from 'next-themes'
 import ThemeSwitch from '@/components/themeSwitch'
+
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
@@ -57,7 +58,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           {[
             { icon: LayoutDashboard, label: 'Dashboard', path: '/admin' },
             { icon: MessageSquare, label: 'Enquiry', path: '/admin/enquiry' },
-            { icon: Package, label: 'Products', path: '/admin/products' },
+            { icon: Mails, label: 'Contact', path: '/admin/contact' },
           ].map((item, index) => (
             <Button 
               key={index} 

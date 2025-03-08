@@ -1,20 +1,10 @@
 "use client";
 
-import {
-  LayoutDashboard,
-  MessageSquare,
-  Package,
-  Users,
-} from "lucide-react";
-import DashboardLayout from "./dashboardLayout";
+import { LayoutDashboard, MessageSquare, Package, Users } from "lucide-react";
 
 export default function Dashboard() {
-
   return (
-    <DashboardLayout>
-      {/* Main Content */}
       <div className="flex flex-1 flex-col">
-
         {/* Dashboard Content */}
         <main className="flex-1 overflow-y-auto p-4 bg-gray-50">
           <h2 className="mb-4 text-2xl font-semibold text-gray-800">
@@ -98,6 +88,5 @@ export default function Dashboard() {
           </div>
         </main>
       </div>
-    </DashboardLayout>
   );
 }
