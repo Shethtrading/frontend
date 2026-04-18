@@ -73,9 +73,9 @@ export default function ReplyModal({
     items: enquiry.orders.map((order) => ({
       cart_id: enquiry.cart_id,
       order_id: order.order_id,
-      rate: order.product_price || 0,
+      rate: order.product_price ?? 0,
       discount: 0,
-      delivery: "",
+      delivery: 0,
     })),
   });
   const [loading, setLoading] = useState(false);
@@ -88,7 +88,7 @@ export default function ReplyModal({
         ...prevState.items[index],
         cart_id: enquiry.cart_id,
         order_id: order.order_id,
-        rate: order.product_price || 0,
+        rate: order.product_price ?? 0,
       })),
     }));
   }, [enquiry]);
@@ -114,9 +114,8 @@ export default function ReplyModal({
         ...prevState,
         items: prevState.items.map((item, i) => {
           if (i === index) {
-            // For discount field, convert empty string to 0
             if (
-              field === "discount" &&
+              (field === "rate" || field === "discount" || field === "delivery") &&
               (value === "" || isNaN(Number(value)))
             ) {
               return { ...item, [field]: 0 };
@@ -194,8 +193,14 @@ export default function ReplyModal({
         title: "Reply sent Successfully",
       });
       onClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error sending reply:", error);
+      toast({
+        title: "Failed to send quotation",
+        description:
+          error?.response?.data?.message || "Please check rate, discount, and delivery values.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
@@ -280,7 +285,7 @@ export default function ReplyModal({
                       <TableCell>
                         <Input
                           type="number"
-                          value={formState.items[index].rate || ""}
+                          value={formState.items[index].rate ?? 0}
                           onChange={(e) =>
                             handleInputChange(
                               "rate",
@@ -309,10 +314,14 @@ export default function ReplyModal({
                       </TableCell>
                       <TableCell>
                         <Input
-                          type="text"
-                          value={formState.items[index].delivery || ""}
+                          type="number"
+                          value={formState.items[index].delivery ?? 0}
                           onChange={(e) =>
-                            handleInputChange("delivery", e.target.value, index)
+                            handleInputChange(
+                              "delivery",
+                              Number.parseFloat(e.target.value),
+                              index
+                            )
                           }
                           placeholder="Delivery"
                           className="w-24"
