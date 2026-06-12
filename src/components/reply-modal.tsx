@@ -350,18 +350,32 @@ export default function ReplyModal({
                 }
               />
             </div>
-            <div className="mt-2 text-right font-medium">
-              Total: ₹
-              {(
-                formState.items.reduce((sum, item) => {
-                  const order = enquiry.orders.find(
-                    (o) => o.order_id === item.order_id
-                  );
-                  const quantity = order?.quantity ?? 0; // ✅ Fallback to 0 if undefined
-                  return sum + (item.rate - item.discount) * quantity;
-                }, 0) + Number(formState.details.Delivery_Charges || 0)
-              ).toFixed(2)}
-            </div>
+            {(() => {
+              const subtotal = formState.items.reduce((sum, item) => {
+                const order = enquiry.orders.find(
+                  (o) => o.order_id === item.order_id
+                );
+                const quantity = order?.quantity ?? 0;
+                return sum + (item.rate * (1 - (item.discount || 0) / 100)) * quantity;
+              }, 0);
+              const delivery = Number(formState.details.Delivery_Charges || 0);
+              const gst = (subtotal + delivery) * 0.18;
+              const grandTotal = subtotal + delivery + gst;
+
+              return (
+                <div className="mt-2 text-right font-medium space-y-1">
+                  <p className="text-xs text-zinc-400">
+                    Total (Excl. GST): ₹{(subtotal + delivery).toFixed(2)}
+                  </p>
+                  <p className="text-xs text-zinc-500">
+                    GST (18%): ₹{gst.toFixed(2)}
+                  </p>
+                  <p className="text-base font-bold text-indigo-600">
+                    Grand Total (Incl. GST): ₹{grandTotal.toFixed(2)}
+                  </p>
+                </div>
+              );
+            })()}
           </div>
           <div>
             <Label className=" font-medium text-sm text-zinc-500 pl-1">
