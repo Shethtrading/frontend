@@ -60,7 +60,7 @@ export default function InvoiceDropdown({ cartData }: InvoiceDropdownProps) {
               <ChevronDown className="w-4 h-4 ml-2 opacity-70" />
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-[200px]">
+          <DropdownMenuContent align="start" className="w-[200px]">
             {hasInvoices ? (
               availableInvoices.map((invoice, index) => (
                 <DropdownMenuItem key={index} asChild>

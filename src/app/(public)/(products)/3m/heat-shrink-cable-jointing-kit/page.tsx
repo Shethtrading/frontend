@@ -49,7 +49,7 @@ export default function Component() {
     []
   );
   const [loading, setLoading] = useState(false);
-  const {setIsVisible} = useVisibility();
+  const { setIsVisible } = useVisibility();
 
   const productImages = [
     "/3m/HEAT_SHRINK_JOINTING_KIT/Indoor_Heat_Shrinking_Kit.png",
@@ -70,24 +70,24 @@ export default function Component() {
   ];
   const allCoreOptions = ["1 Core", "2 Core", "3 Core", "3.5 Core", "4 Core"];
   const sizeOptions = [
-    "6mm",
-    "10mm",
-    "16mm",
-    "25mm",
-    "35mm",
-    "50mm",
-    "70mm",
-    "95mm",
-    "120mm",
-    "150mm",
-    "185mm",
-    "240mm",
-    "300mm",
-    "400mm",
-    "500mm",
-    "630mm",
-    "800mm",
-    "1000mm",
+    "6",
+    "10",
+    "16",
+    "25",
+    "35",
+    "50",
+    "70",
+    "95",
+    "120",
+    "150",
+    "185",
+    "240",
+    "300",
+    "400",
+    "500",
+    "630",
+    "800",
+    "1000",
   ];
   const cableTypeOptions = ["XLPE", "PVC", "EPR", "Aerial Bunched Cable (ABC)"];
 
@@ -157,7 +157,7 @@ export default function Component() {
       formData.termination.toLowerCase() === "Straight-Through Joint"
         ? "Straight-Through Joint"
         : ((formData.termination.charAt(0).toUpperCase() +
-            formData.termination.slice(1)) as TerminationType);
+          formData.termination.slice(1)) as TerminationType);
 
     const coreType = formData.core.toUpperCase() as CoreType;
     const sizeType = formData.size.replace("sqmm", "mm") as SizeType;
@@ -225,199 +225,198 @@ export default function Component() {
 
   return (
     <div className="container w-full mx-auto mt-[3rem] bg-gray-300">
-  {loading && <LoadingSpinner />}
+      {loading && <LoadingSpinner />}
 
-  <Card className="overflow-visible">
-    <CardContent className="p-0">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Left side - Image + Thumbnails + Description */}
-        <div className="p-10 space-y-8">
-          {/* Main product image */}
-          <div className="relative w-full h-[300px] md:h-[400px] lg:h-[450px] rounded-lg overflow-visible bg-white shadow">
-            <Image
-              src={productImages[selectedImage]}
-              alt={`Product Image ${selectedImage + 1}`}
-              layout="fill"
-              objectFit="contain"
-              className="rounded-lg"
-            />
-
-            {/* Tech Sheet button */}
-            <div className="absolute bottom-4 right-4">
-              <a
-                href="/3m/HEAT_SHRINK_JOINTING_KIT/STC_HS.pdf"
-                download
-                className="flex items-center gap-2 px-3 py-2 bg-white/90 border rounded-md shadow hover:bg-gray-100 text-sm font-medium transition-colors"
-              >
-                <Download className="h-4 w-4" />
-                Tech Sheet
-              </a>
-            </div>
-          </div>
-
-          {/* Thumbnails */}
-          <div className="flex flex-wrap gap-3">
-            {productImages.map((img, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedImage(index)}
-                className={`relative w-20 h-20 rounded-md overflow-visible border ${
-                  selectedImage === index
-                    ? "ring-2 ring-primary"
-                    : "hover:border-gray-400"
-                }`}
-              >
+      <Card className="overflow-visible">
+        <CardContent className="p-0">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left side - Image + Thumbnails + Description */}
+            <div className="p-10 space-y-8">
+              {/* Main product image */}
+              <div className="relative w-full h-[300px] md:h-[400px] lg:h-[450px] rounded-lg overflow-visible bg-white shadow">
                 <Image
-                  src={img}
-                  alt={`Thumbnail ${index + 1}`}
+                  src={productImages[selectedImage]}
+                  alt={`Product Image ${selectedImage + 1}`}
                   layout="fill"
-                  objectFit="cover"
+                  objectFit="contain"
+                  className="rounded-lg"
                 />
-              </button>
-            ))}
+
+                {/* Tech Sheet button */}
+                <div className="absolute bottom-4 right-4">
+                  <a
+                    href="/3m/HEAT_SHRINK_JOINTING_KIT/STC_HS.pdf"
+                    download
+                    className="flex items-center gap-2 px-3 py-2 bg-white/90 border rounded-md shadow hover:bg-gray-100 text-sm font-medium transition-colors"
+                  >
+                    <Download className="h-4 w-4" />
+                    Tech Sheet
+                  </a>
+                </div>
+              </div>
+
+              {/* Thumbnails */}
+              <div className="flex flex-wrap gap-3">
+                {productImages.map((img, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedImage(index)}
+                    className={`relative w-20 h-20 rounded-md overflow-visible border ${selectedImage === index
+                      ? "ring-2 ring-primary"
+                      : "hover:border-gray-400"
+                      }`}
+                  >
+                    <Image
+                      src={img}
+                      alt={`Thumbnail ${index + 1}`}
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Right side - Configurator */}
+            <div className="p-6 space-y-6">
+              {/* Title + marketing blurb */}
+
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="cableType">Cable Type</Label>
+                  <Select
+                    onValueChange={(value) => handleInputChange("cableType", value)}
+                  >
+                    <SelectTrigger id="cableType">
+                      <SelectValue placeholder="Select Cable Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {cableTypeOptions.map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {option}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="termination">Technology</Label>
+                  <Select
+                    onValueChange={(value) => handleInputChange("termination", value)}
+                  >
+                    <SelectTrigger id="termination">
+                      <SelectValue placeholder="Select Technology" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {[
+                        "Indoor Termination",
+                        "Outdoor Termination",
+                        "Straight-Through Joint",
+                      ].map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {option}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="voltage">Voltage</Label>
+                  <Select
+                    onValueChange={(value) => handleInputChange("voltage", value)}
+                  >
+                    <SelectTrigger id="voltage">
+                      <SelectValue placeholder="Select Voltage" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {allVoltageOptions.map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {option}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="core">Core</Label>
+                  <Select
+                    onValueChange={(value) => handleInputChange("core", value)}
+                  >
+                    <SelectTrigger id="core">
+                      <SelectValue placeholder="Select Core" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {allCoreOptions.map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {option}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="size">Size (sqmm)</Label>
+                  <Select
+                    onValueChange={(value) => handleInputChange("size", value)}
+                  >
+                    <SelectTrigger id="size">
+                      <SelectValue placeholder="Select Size" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {sizeOptions.map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {option}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="material">Material</Label>
+                  <Select
+                    onValueChange={(value) => handleInputChange("material", value)}
+                  >
+                    <SelectTrigger id="material">
+                      <SelectValue placeholder="Select Material" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ALUMINIUM">Aluminium</SelectItem>
+                      <SelectItem value="COPPER">Copper</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="quantity">Quantity</Label>
+                  <Input
+                    id="quantity"
+                    type="number"
+                    min="1"
+                    value={formData.quantity}
+                    onChange={(e) => {
+                      const newValue = e.target.value;
+                      if (newValue === "" || !isNaN(parseInt(newValue))) {
+                        handleInputChange("quantity", newValue);
+                      }
+                    }}
+                    className="w-full"
+                  />
+                </div>
+              </div>
+
+              <Button className="w-full" onClick={handleAddToCart}>
+                Add to Cart
+              </Button>
+            </div>
           </div>
-        </div>
-
-        {/* Right side - Configurator */}
-        <div className="p-6 space-y-6">
-          {/* Title + marketing blurb */}
-
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="cableType">Cable Type</Label>
-              <Select
-                onValueChange={(value) => handleInputChange("cableType", value)}
-              >
-                <SelectTrigger id="cableType">
-                  <SelectValue placeholder="Select Cable Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {cableTypeOptions.map((option) => (
-                    <SelectItem key={option} value={option}>
-                      {option}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label htmlFor="termination">Technology</Label>
-              <Select
-                onValueChange={(value) => handleInputChange("termination", value)}
-              >
-                <SelectTrigger id="termination">
-                  <SelectValue placeholder="Select Technology" />
-                </SelectTrigger>
-                <SelectContent>
-                  {[
-                    "Indoor Termination",
-                    "Outdoor Termination",
-                    "Straight-Through Joint",
-                  ].map((option) => (
-                    <SelectItem key={option} value={option}>
-                      {option}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label htmlFor="voltage">Voltage</Label>
-              <Select
-                onValueChange={(value) => handleInputChange("voltage", value)}
-              >
-                <SelectTrigger id="voltage">
-                  <SelectValue placeholder="Select Voltage" />
-                </SelectTrigger>
-                <SelectContent>
-                  {allVoltageOptions.map((option) => (
-                    <SelectItem key={option} value={option}>
-                      {option}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label htmlFor="core">Core</Label>
-              <Select
-                onValueChange={(value) => handleInputChange("core", value)}
-              >
-                <SelectTrigger id="core">
-                  <SelectValue placeholder="Select Core" />
-                </SelectTrigger>
-                <SelectContent>
-                  {allCoreOptions.map((option) => (
-                    <SelectItem key={option} value={option}>
-                      {option}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label htmlFor="size">Size</Label>
-              <Select
-                onValueChange={(value) => handleInputChange("size", value)}
-              >
-                <SelectTrigger id="size">
-                  <SelectValue placeholder="Select Size" />
-                </SelectTrigger>
-                <SelectContent>
-                  {sizeOptions.map((option) => (
-                    <SelectItem key={option} value={option}>
-                      {option}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label htmlFor="material">Material</Label>
-              <Select
-                onValueChange={(value) => handleInputChange("material", value)}
-              >
-                <SelectTrigger id="material">
-                  <SelectValue placeholder="Select Material" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ALUMINIUM">Aluminium</SelectItem>
-                  <SelectItem value="COPPER">Copper</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label htmlFor="quantity">Quantity</Label>
-              <Input
-                id="quantity"
-                type="number"
-                min="1"
-                value={formData.quantity}
-                onChange={(e) => {
-                  const newValue = e.target.value;
-                  if (newValue === "" || !isNaN(parseInt(newValue))) {
-                    handleInputChange("quantity", newValue);
-                  }
-                }}
-                className="w-full"
-              />
-            </div>
-          </div>
-
-          <Button className="w-full" onClick={handleAddToCart}>
-            Add to Cart
-          </Button>
-        </div>
-      </div>
-    </CardContent>
-    <div className="prose p-10 w-full text-gray-700">
-            <div>
+        </CardContent>
+        <div className="prose p-10 w-full text-gray-700">
+          <div>
             <h1 className="text-3xl font-bold mb-2">HEAT SHRINK JOINTING KIT</h1>
             <p className="text-gray-600 text-base leading-relaxed">
               When it comes to 3M Cable Jointing Kits, the name Sheth Trading
@@ -434,45 +433,45 @@ export default function Component() {
 
           </div>
 
-            <h2 className="text-xl font-semibold mt-4">Product Description</h2>
-            <p>
-              3M Heat Shrink Low, Medium and High voltage Terminations and
-              Straight Through Joints are available for tape/wire shielded,
-              armoured/unarmoured single core and three core HT polymeric cables
-              and Three and a half/Four core for LT polymeric cables. 3M Heat
-              Shrinkable terminations utilize a unique high dielectric constant
-              (High K) stress control tube and mastic for effective grading of
-              electrical stresses. The non tracking heat shrinkable insulating
-              outer tube is optimally designed for reliable environmental
-              protection.
-            </p>
+          <h2 className="text-xl font-semibold mt-4">Product Description</h2>
+          <p>
+            3M Heat Shrink Low, Medium and High voltage Terminations and
+            Straight Through Joints are available for tape/wire shielded,
+            armoured/unarmoured single core and three core HT polymeric cables
+            and Three and a half/Four core for LT polymeric cables. 3M Heat
+            Shrinkable terminations utilize a unique high dielectric constant
+            (High K) stress control tube and mastic for effective grading of
+            electrical stresses. The non tracking heat shrinkable insulating
+            outer tube is optimally designed for reliable environmental
+            protection.
+          </p>
 
-            <h3 className="font-semibold mt-4">Features:</h3>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>Available for 1-core and 3-core polymeric cables.</li>
-              <li>Provides excellent environmental protection and moisture sealing.</li>
-              <li>Wide conductor size ranges up to 1000 mm²</li>
-              <li>Suitable for crimped & shear bolt connectors</li>
-              <li>BIL of 350 KVp</li>
-              <li>Installation support and training</li>
-            </ul>
+          <h3 className="font-semibold mt-4">Features:</h3>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Available for 1-core and 3-core polymeric cables.</li>
+            <li>Provides excellent environmental protection and moisture sealing.</li>
+            <li>Wide conductor size ranges up to 1000 mm²</li>
+            <li>Suitable for crimped & shear bolt connectors</li>
+            <li>BIL of 350 KVp</li>
+            <li>Installation support and training</li>
+          </ul>
 
-            <h3 className="font-semibold mt-4">Advantages:</h3>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>Complete portfolio from 1.1 kV to 66 kV</li>
-              <li>
-                Application flexibility – wide range of cable sizes & constructions
-              </li>
-              <li>Covers inline and crossbond splicing applications</li>
-              <li>Strong technical support</li>
-            </ul>
+          <h3 className="font-semibold mt-4">Advantages:</h3>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Complete portfolio from 1.1 kV to 66 kV</li>
+            <li>
+              Application flexibility – wide range of cable sizes & constructions
+            </li>
+            <li>Covers inline and crossbond splicing applications</li>
+            <li>Strong technical support</li>
+          </ul>
 
-            <h3 className="font-semibold mt-4">Certifications:</h3>
-            <p>Type tested according to IEC 60840</p>
-          </div>
-  </Card> 
-  
-</div>
-  
+          <h3 className="font-semibold mt-4">Certifications:</h3>
+          <p>Type tested according to IEC 60840</p>
+        </div>
+      </Card>
+
+    </div>
+
   );
 }
