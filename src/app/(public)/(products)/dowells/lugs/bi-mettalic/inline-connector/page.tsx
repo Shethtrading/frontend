@@ -33,33 +33,33 @@ export default function Component() {
   const productImages = ["/new_pics/Lugs/Bi-Metallic Connector (Friction Welded).png","/dowells/lugs/bi-metallic/inline/img1.png"];
 
   const packOptions = [
-    { label: "CACF-16-16 / 16-16", value: "CACF-16-16" },
-    { label: "CACF-25-16 / 25-16", value: "CACF-25-16" },
-    { label: "CACF-25-25 / 25-25", value: "CACF-25-25" },
-    { label: "CACF-35-16 / 35-16", value: "CACF-35-16" },
-    { label: "CACF-35-25 / 35-25", value: "CACF-35-25" },
-    { label: "CACF-35-35 / 35-35", value: "CACF-35-35" },
-    { label: "CACF-50-25 / 50-25", value: "CACF-50-25" },
-    { label: "CACF-50-35 / 50-35", value: "CACF-50-35" },
-    { label: "CACF-50-50 / 50-50", value: "CACF-50-50" },
-    { label: "CACF-70-35 / 70-35", value: "CACF-70-35" },
-    { label: "CACF-70-50 / 70-50", value: "CACF-70-50" },
-    { label: "CACF-70-70 / 70-70", value: "CACF-70-70" },
-    { label: "CACF-95-50 / 95-50", value: "CACF-95-50" },
-    { label: "CACF-95-70 / 95-75", value: "CACF-95-70" },
-    { label: "CACF-95-95 / 95-95", value: "CACF-95-95" },
-    { label: "CACF-120-70 / 120-70", value: "CACF-120-70" },
-    { label: "CACF-120-95 / 120-95", value: "CACF-120-95" },
-    { label: "CACF-120-120 / 120-120", value: "CACF-120-120" },
-    { label: "CACF-150-95 / 150-95", value: "CACF-150-95" },
-    { label: "CACF-150-120 / 150-120", value: "CACF-150-120" },
-    { label: "CACF-150-150 / 150-150", value: "CACF-150-150" },
-    { label: "CACF-185-120 / 185-120", value: "CACF-185-120" },
-    { label: "CACF-185-150 / 185-150", value: "CACF-185-150" },
-    { label: "CACF-185-185 / 185-185", value: "CACF-185-185" },
-    { label: "CACF-240-150 / 240-150", value: "CACF-240-150" },
-    { label: "CACF-240-185 / 240-185", value: "CACF-240-185" },
-    { label: "CACF-240-240 / 240-240", value: "CACF-240-240" },
+    { label: "16-16 / CACF-16-16", value: "CACF-16-16" },
+    { label: "25-16 / CACF-25-16", value: "CACF-25-16" },
+    { label: "25-25 / CACF-25-25", value: "CACF-25-25" },
+    { label: "35-16 / CACF-35-16", value: "CACF-35-16" },
+    { label: "35-25 / CACF-35-25", value: "CACF-35-25" },
+    { label: "35-35 / CACF-35-35", value: "CACF-35-35" },
+    { label: "50-25 / CACF-50-25", value: "CACF-50-25" },
+    { label: "50-35 / CACF-50-35", value: "CACF-50-35" },
+    { label: "50-50 / CACF-50-50", value: "CACF-50-50" },
+    { label: "70-35 / CACF-70-35", value: "CACF-70-35" },
+    { label: "70-50 / CACF-70-50", value: "CACF-70-50" },
+    { label: "70-70 / CACF-70-70", value: "CACF-70-70" },
+    { label: "95-50 / CACF-95-50", value: "CACF-95-50" },
+    { label: "95-75 / CACF-95-70", value: "CACF-95-70" },
+    { label: "95-95 / CACF-95-95", value: "CACF-95-95" },
+    { label: "120-70 / CACF-120-70", value: "CACF-120-70" },
+    { label: "120-95 / CACF-120-95", value: "CACF-120-95" },
+    { label: "120-120 / CACF-120-120", value: "CACF-120-120" },
+    { label: "150-95 / CACF-150-95", value: "CACF-150-95" },
+    { label: "150-120 / CACF-150-120", value: "CACF-150-120" },
+    { label: "150-150 / CACF-150-150", value: "CACF-150-150" },
+    { label: "185-120 / CACF-185-120", value: "CACF-185-120" },
+    { label: "185-150 / CACF-185-150", value: "CACF-185-150" },
+    { label: "185-185 / CACF-185-185", value: "CACF-185-185" },
+    { label: "240-150 / CACF-240-150", value: "CACF-240-150" },
+    { label: "240-185 / CACF-240-185", value: "CACF-240-185" },
+    { label: "240-240 / CACF-240-240", value: "CACF-240-240" },
   ];
 
   const handleInputChange = (field: string, value: string | number) => {
@@ -80,9 +80,12 @@ export default function Component() {
       const quantity = formData.quantity;
       const name = `Dowell's Lugs Bi-Mettalic Inline Connector ${formData.pack}`;
 
+      const selectedOption = packOptions.find((o) => o.value === formData.pack);
+      const size = selectedOption ? selectedOption.label.split("/")[0].trim() : undefined;
+
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/order`,
-        { cat_no, quantity, name }
+        { cat_no, quantity, name, size }
       );
 
       console.log(res);
@@ -93,7 +96,7 @@ export default function Component() {
       }
 
       toast({ description: "Added to Cart Successfully" });
- window.location.reload()
+      window.location.reload();
     } catch (error) {
       console.error(error);
       toast({ description: "Failed to add to cart, please try again." });
