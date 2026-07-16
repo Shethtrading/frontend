@@ -87,9 +87,21 @@ export default function Component() {
       const quantity = formData.quantity;
       const name = `Dowell's Lugs Copper Ring-Type Double Grip ${formData.pack}`;
 
+      const selectedOption = packOptions.find((o) => o.value === formData.pack);
+
+
+      const size = selectedOption ? selectedOption.label.split("/")[0].trim() : undefined;
+
+
       const res = await axios.post(
+
+
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/order`,
-        { cat_no, quantity, name }
+
+
+        { cat_no, quantity, name, size }
+
+
       );
 
       console.log(res);

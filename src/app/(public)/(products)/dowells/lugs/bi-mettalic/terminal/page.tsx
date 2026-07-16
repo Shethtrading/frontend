@@ -33,19 +33,19 @@ export default function Component() {
   const productImages = ["/new_pics/Lugs/Bi-Metallic Terminal (Friction Welded).png","/dowells/lugs/bi-metallic/terminal/img1.png"];
 
   const packOptions = [
-    { label: "CAF-25-10 / 25", value: "CAF-25-10" },
-    { label: "CAF-35-10 / 35", value: "CAF-35-10" },
-    { label: "CAF-50-13 / 50", value: "CAF-50-13" },
-    { label: "CAF-70-13 / 70", value: "CAF-70-13" },
-    { label: "CAF-95-13 / 95", value: "CAF-95-13" },
-    { label: "CAF-120-13 / 120", value: "CAF-120-13" },
-    { label: "CAF-150-13 / 150", value: "CAF-150-13" },
-    { label: "CAF-185-13 / 185", value: "CAF-185-13" },
-    { label: "CAF-240-13 / 240", value: "CAF-240-13" },
-    { label: "CAF-300-17 / 300", value: "CAF-300-17" },
-    { label: "CAF-400-17 / 400", value: "CAF-400-17" },
-    { label: "CAF-500 / 500", value: "CAF-500" },
-    { label: "CAF-630 / 630", value: "CAF-630" },
+    { label: "25 / CAF-25-10", value: "CAF-25-10" },
+    { label: "35 / CAF-35-10", value: "CAF-35-10" },
+    { label: "50 / CAF-50-13", value: "CAF-50-13" },
+    { label: "70 / CAF-70-13", value: "CAF-70-13" },
+    { label: "95 / CAF-95-13", value: "CAF-95-13" },
+    { label: "120 / CAF-120-13", value: "CAF-120-13" },
+    { label: "150 / CAF-150-13", value: "CAF-150-13" },
+    { label: "185 / CAF-185-13", value: "CAF-185-13" },
+    { label: "240 / CAF-240-13", value: "CAF-240-13" },
+    { label: "300 / CAF-300-17", value: "CAF-300-17" },
+    { label: "400 / CAF-400-17", value: "CAF-400-17" },
+    { label: "500 / CAF-500", value: "CAF-500" },
+    { label: "630 / CAF-630", value: "CAF-630" },
   ];
 
   const handleInputChange = (field: string, value: string | number) => {
@@ -66,9 +66,12 @@ export default function Component() {
       const quantity = formData.quantity;
       const name = `Dowell's Lugs Bi-Mettalic Terminal ${formData.pack}`;
 
+      const selectedOption = packOptions.find((o) => o.value === formData.pack);
+      const size = selectedOption ? selectedOption.label.split("/")[0].trim() : undefined;
+
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/order`,
-        { cat_no, quantity, name }
+        { cat_no, quantity, name, size }
       );
 
       console.log(res);
@@ -79,7 +82,7 @@ export default function Component() {
       }
 
       toast({ description: "Added to Cart Successfully" });
- window.location.reload()
+      window.location.reload();
     } catch (error) {
       console.error(error);
       toast({ description: "Failed to add to cart, please try again." });
